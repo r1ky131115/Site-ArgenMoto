@@ -1,0 +1,44 @@
+.hero-wrap {
+  width: 100%;
+  height: 850px;
+  position: inherit;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center; 
+}
+  
+@media (max-width: 1199.98px) {
+    .hero-wrap 
+    {
+      background-position: center center !important; } 
+    }
+  .hero-wrap .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    opacity: .3;
+    background: #000000;
+    height: 850px; 
+  }
+
+  @media (max-width: 991.98px) {
+    .hero-wrap {
+      height: 1150px; }
+      .hero-wrap .overlay {
+        height: 1150px; } 
+      }
+  .hero-wrap.hero-wrap-2 {
+    height: 600px !important;
+    position: relative; 
+  }
+    .hero-wrap.hero-wrap-2 .overlay {
+      width: 100%;
+      opacity: .3;
+      height: 600px; 
+    }
+    .hero-wrap.hero-wrap-2 .slider-text {
+      height: 600px !important; 
+    }

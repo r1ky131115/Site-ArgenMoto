@@ -1,73 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Map, Handshake, Car } from 'react-flaticons';
-
-
-// Hook personalizado para las animaciones
-const useAnimateOnScroll = () => {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const currentRef = ref.current;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Primero agregamos item-animate
-            entry.target.classList.add('item-animate');
-            
-            // Después agregamos las animaciones con delay
-            setTimeout(() => {
-              const elements = document.querySelectorAll('.ftco-animate.item-animate');
-              elements.forEach((el, index) => {
-                setTimeout(() => {
-                  const animateEffect = el.getAttribute('data-animate-effect');
-                  if (animateEffect === 'fadeIn') {
-                    el.classList.add('fadeIn', 'ftco-animated');
-                  } else if (animateEffect === 'fadeInLeft') {
-                    el.classList.add('fadeInLeft', 'ftco-animated');
-                  } else if (animateEffect === 'fadeInRight') {
-                    el.classList.add('fadeInRight', 'ftco-animated');
-                  } else {
-                    el.classList.add('fadeInUp', 'ftco-animated');
-                  }
-                  el.classList.remove('item-animate');
-                }, index * 50);
-              });
-            }, 100);
-            
-            // Desconectamos el observer una vez que se ha animado
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.05,
-        rootMargin: '-5%'
-      }
-    );
-
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
-
-  return ref;
-};
-
+import useAnimateOnScroll from '../../hooks/useAnimateOnScroll';
+import '../../styles/animation.css'
 
 const BookingSection: React.FC = () => {
-  const formRef = useAnimateOnScroll();
-  const servicesRef = useAnimateOnScroll();
+  const formRef = useAnimateOnScroll<HTMLFormElement>();
+  const servicesRef = useAnimateOnScroll<HTMLDivElement>();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Aquí iría la lógica del submit
+    // Lógica del submit
   };
 
   return (
@@ -152,7 +94,7 @@ const BookingSection: React.FC = () => {
                   <h3 className="heading-section mb-4">Better Way to Rent Your Perfect Cars</h3>
                   <div className="row d-flex mb-4">
                     {/* Servicio 1 */}
-                    <div className="col-md-4 d-flex align-self-stretch ftco-animate">
+                    <div ref={servicesRef} className="col-md-4 d-flex align-self-stretch .item-animate">
                       <div className="services w-100 text-center">
                         <div className="icon d-flex align-items-center justify-content-center">
                           <Map size={24} />
@@ -163,7 +105,7 @@ const BookingSection: React.FC = () => {
                       </div>
                     </div>
                     {/* Servicio 2 */}
-                    <div className="col-md-4 d-flex align-self-stretch ftco-animate">
+                    <div ref={servicesRef} className="col-md-4 d-flex align-self-stretch .item-animate">
                       <div className="services w-100 text-center">
                         <div className="icon d-flex align-items-center justify-content-center">
                           <Handshake size={24} />
@@ -174,7 +116,7 @@ const BookingSection: React.FC = () => {
                       </div>
                     </div>
                     {/* Servicio 3 */}
-                    <div className="col-md-4 d-flex align-self-stretch ftco-animate">
+                    <div ref={servicesRef} className="col-md-4 d-flex align-self-stretch .item-animate">
                       <div className="services w-100 text-center">
                         <div className="icon d-flex align-items-center justify-content-center">
                           <Car size={24} />
@@ -185,11 +127,6 @@ const BookingSection: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <p>
-                    {/* <a href="#" className="btn btn-primary py-3 px-4">
-                      Reserve Your Perfect Car
-                    </a> */}
-                  </p>
                 </div>
               </div>
             </div>
