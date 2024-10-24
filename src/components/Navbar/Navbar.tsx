@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import NavbarToggleButton from '../Buttons/NavbarToggleButton';
-import { User } from 'react-flaticons';
+import { SupervisedUserCircleSharp } from '@mui/icons-material';
 
 const Navbar: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -93,7 +93,7 @@ const Navbar: React.FC = () => {
                 onClick={handleNavLinkClick}
               >
                 Perfil&nbsp;
-                <User className='mb-2' size={16} />
+                <SupervisedUserCircleSharp className='mb-2' />
               </NavLink>
             </li>
           </ul>

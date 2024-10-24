@@ -4,6 +4,8 @@ import FeaturedVehiclesSection from '../../components/Sections/FeaturedVehiclesS
 import { ListOfVehicles } from "../../utils/Mock/mockVehicles";
 import AboutSection from '../../components/Sections/AboutSection';
 import '../../index.css';
+import ServicesSection from '../../components/Sections/ServicesSection';
+import CounterSection from '../../components/Sections/CounterSection';
 
 const Home: React.FC = () => {
   const handleBookNow = (id: number) => {
@@ -28,6 +30,8 @@ const Home: React.FC = () => {
         onViewDetails={handleViewDetails}
       />
       <AboutSection />
+      <ServicesSection />
+      <CounterSection />
     </>
   );
 };
