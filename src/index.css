@@ -9946,4 +9946,7 @@
     100% {
       stroke-dasharray: 89, 200;
       stroke-dashoffset: -136px; } }
-  
+
+      .small-icon {
+        font-size: 50rem; /* Ajusta el tamaño según necesites */
+    }

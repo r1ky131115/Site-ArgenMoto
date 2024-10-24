@@ -10,7 +10,7 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onBookNow, onViewDet
         />
         <div className="text">
           <h2 className="mb-0">
-            <a href="#" className="text-gray-800 hover:text-blue-600">
+            <a href="/" className="text-gray-800 hover:text-blue-600">
               {vehicle.name}
             </a>
           </h2>

@@ -2,18 +2,17 @@ import React from 'react';
 import { MenuBurger } from 'react-flaticons';
 
 interface NavbarToggleButtonProps {
-  target: string;
+  onClick: () => void;
+  isCollapsed: boolean;
 }
 
-const NavbarToggleButton: React.FC<NavbarToggleButtonProps> = ({ target }) => {
+const NavbarToggleButton: React.FC<NavbarToggleButtonProps> = ({ onClick, isCollapsed }) => {
   return (
     <button
       className="navbar-toggler"
       type="button"
-      data-toggle="collapse"
-      data-target={`#${target}`}
-      aria-controls={target}
-      aria-expanded="false"
+      onClick={onClick}
+      aria-expanded={!isCollapsed}
       aria-label="Toggle navigation"
     >
       <span className="oi oi-menu"><MenuBurger size={24}/></span> Menu

@@ -1,33 +1,100 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import NavbarToggleButton from '../Buttons/NavbarToggleButton';
+import { User } from 'react-flaticons';
 
 const Navbar: React.FC = () => {
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const handleToggle = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  const handleNavLinkClick = () => {
+    setIsCollapsed(true);
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
       <div className="container">
-        <a className="navbar-brand" href="index.html">Argen<span>Moto</span></a>
+        <NavLink className="navbar-brand" to="/">
+          Argen<span>Moto</span>
+        </NavLink>
         
-        <NavbarToggleButton target="ftco-nav" />
+        <NavbarToggleButton 
+          onClick={handleToggle} 
+          isCollapsed={isCollapsed}
+        />
 
-        <div className="collapse navbar-collapse" id="ftco-nav">
+        <div className={`collapse navbar-collapse ${isCollapsed ? '' : 'show'}`} id="ftco-nav">
           <ul className="navbar-nav ml-auto">
-            <li className="nav-item active">
-              <a href="index.html" className="nav-link">Inicio</a>
+            <li className="nav-item">
+              <NavLink 
+                to="/" 
+                className={({ isActive }) => 
+                  `nav-link ${isActive ? 'active' : ''}`
+                }
+                onClick={handleNavLinkClick}
+                end  // Asegura que solo coincida con la ruta exacta
+              >
+                Inicio
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a href="about.html" className="nav-link">Sobre nosotros</a>
+              <NavLink 
+                to="/servicios" 
+                className={({ isActive }) => 
+                  `nav-link ${isActive ? 'active' : ''}`
+                }
+                onClick={handleNavLinkClick}
+              >
+                Servicios
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a href="services.html" className="nav-link">Servicios</a>
+              <NavLink 
+                to="/motos" 
+                className={({ isActive }) => 
+                  `nav-link ${isActive ? 'active' : ''}`
+                }
+                onClick={handleNavLinkClick}
+              >
+                Motos
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a href="car.html" className="nav-link">Motos</a>
+              <NavLink 
+                to="/repuestos" 
+                className={({ isActive }) => 
+                  `nav-link ${isActive ? 'active' : ''}`
+                }
+                onClick={handleNavLinkClick}
+              >
+                Repuestos
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a href="pricing.html" className="nav-link">Repuestos</a>
+              <NavLink 
+                to="/contacto" 
+                className={({ isActive }) => 
+                  `nav-link ${isActive ? 'active' : ''}`
+                }
+                onClick={handleNavLinkClick}
+              >
+                Contacto
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a href="contact.html" className="nav-link">Contacto</a>
+              <NavLink 
+                to="/perfil" 
+                className={({ isActive }) => 
+                  `nav-link ${isActive ? 'active' : ''}`
+                }
+                onClick={handleNavLinkClick}
+              >
+                Perfil&nbsp;
+                <User className='mb-2' size={16} />
+              </NavLink>
             </li>
           </ul>
         </div>
