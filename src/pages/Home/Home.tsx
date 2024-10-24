@@ -2,6 +2,7 @@ import HeroSection from '../../components/Hero/HeroSection';
 import BookingSection from '../../components/Booking/BookingSection';
 import FeaturedVehiclesSection from '../../components/Sections/FeaturedVehiclesSection';
 import { ListOfVehicles } from "../../utils/Mock/mockVehicles";
+import AboutSection from '../../components/Sections/AboutSection';
 import '../../index.css';
 
 const Home: React.FC = () => {
@@ -26,6 +27,7 @@ const Home: React.FC = () => {
         onBookNow={handleBookNow}
         onViewDetails={handleViewDetails}
       />
+      <AboutSection />
     </>
   );
 };
