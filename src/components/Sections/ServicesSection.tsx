@@ -1,22 +1,22 @@
 import React from 'react';
-import { DirectionsCar } from '@mui/icons-material';
+import { DirectionsCar, Handshake, Sell } from '@mui/icons-material';
 
 const ServicesSection: React.FC = () => {
     const services = [
     {
         icon: <DirectionsCar fontSize="large" color="action" />,
         title: 'Venta',
-        description: 'A small river named Duden flows by their place and supplies it with the necessary regelialia.',
+        description: 'Ofrecemos una amplia variedad de vehículos nuevos y usados, adaptados a tus necesidades y presupuesto.',
     },
     {
-        icon: <DirectionsCar fontSize="large" color="action" />,
+        icon: <Sell fontSize="large" color="action" />,
         title: 'Post-Venta',
-        description: 'A small river named Duden flows by their place and supplies it with the necessary regelialia.',
+        description: 'Brindamos asistencia y soporte continuo para garantizar tu satisfacción y el óptimo rendimiento de tu vehículo.',
     },
     {
-        icon: <DirectionsCar fontSize="large" color="action" />,
+        icon: <Handshake fontSize="large" color="action" />,
         title: 'Atención continua',
-        description: 'A small river named Duden flows by their place and supplies it with the necessary regelialia.',
+        description: 'Nuestro equipo está disponible para resolver cualquier consulta y ofrecerte asesoría en todo momento.',
     },
     ];
 
