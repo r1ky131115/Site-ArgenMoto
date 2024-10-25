@@ -42,17 +42,6 @@ const Navbar: React.FC = () => {
             </li>
             <li className="nav-item">
               <NavLink 
-                to="/servicios" 
-                className={({ isActive }) => 
-                  `nav-link ${isActive ? 'active' : ''}`
-                }
-                onClick={handleNavLinkClick}
-              >
-                Servicios
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink 
                 to="/motos" 
                 className={({ isActive }) => 
                   `nav-link ${isActive ? 'active' : ''}`

@@ -6,7 +6,6 @@ import AboutSection from '../../components/Sections/AboutSection';
 import '../../index.css';
 import ServicesSection from '../../components/Sections/ServicesSection';
 import CounterSection from '../../components/Sections/CounterSection';
-import Footer from '../../components/Footer/Footer';
 
 const Home: React.FC = () => {
   const handleBookNow = (id: number) => {
@@ -33,7 +32,6 @@ const Home: React.FC = () => {
       <AboutSection />
       <ServicesSection />
       <CounterSection />
-      <Footer />
     </>
   );
 };
