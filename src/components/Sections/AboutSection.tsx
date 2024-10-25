@@ -13,27 +13,24 @@ const AboutSection: React.FC = () => {
         <div className="row no-gutters">
           <div
             className="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center"
-            style={{ backgroundImage: `url('/images/about.jpg')` }}
+            style={{ backgroundImage: `url('/images/image_6.jpg')` }}
           >
           </div>
           
           <div ref={servicesRef} className="col-md-6 wrap-about ftco-animate">
             <div className="heading-section heading-section-white pl-md-5">
               <span className="subheading">Sobre nosotros</span>
-              <h2 className="mb-4">Welcome to ArgenMoto</h2>
+              <h2 className="mb-4">Bienvenido a ArgenMoto</h2>
               
               <p>
-                A small river named Duden flows by their place and supplies it with the necessary regelialia. 
-                It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
+                cada vehículo cuenta una historia y cada viaje comienza con un sueño. 
+                Nuestra pasión por la movilidad y la excelencia nos impulsa a ofrecerte solo lo mejor. 
+                Explora nuestra amplia gama de autos y encuentra el compañero perfecto para tus aventuras. 
+                Confiabilidad, innovación y un servicio excepcional te esperan. 
               </p>
               
               <p>
-                On her way she met a copy. The copy warned the Little Blind Text, that where it came from it 
-                would have been rewritten a thousand times and everything that was left from its origin 
-                would be the word "and" and the Little Blind Text should turn around and return to its own, 
-                safe country. A small river named Duden flows by their place and supplies it with the 
-                necessary regelialia. It is a paradisematic country, in which roasted parts of sentences 
-                fly into your mouth.
+                ¡Tu próximo viaje comienza aquí!
               </p>
               
               <p>

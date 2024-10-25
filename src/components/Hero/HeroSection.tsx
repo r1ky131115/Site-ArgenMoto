@@ -3,15 +3,15 @@ import useAnimateOnScroll from '../../hooks/useAnimateOnScroll';
 import '../../styles/animation.css'
 
 interface HeroSectionProps {
-  backgroundImage: string;
-  title: string;
-  description: string;
+  backgroundImage?: string;
+  title?: string;
+  description?: string;
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({
-  backgroundImage = '/api/placeholder/1920/1080',
-  title = 'Fast & Easy Way To Rent A Car',
-  description = 'A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts'
+  backgroundImage = '/images/bg_1.jpg',
+  title = 'Una Forma rápida y fácil de comprar un vehículo',
+  description = 'Nuestra pasión por la movilidad y la excelencia nos impulsa a ofrecerte solo lo mejor. Explora nuestra amplia gama de autos y encuentra el compañero perfecto para tus aventuras. Confiabilidad, innovación y un servicio excepcional te esperan. ¡Tu próximo viaje comienza aquí!'
 }) => {
 
   const servicesRef = useAnimateOnScroll<HTMLDivElement>();

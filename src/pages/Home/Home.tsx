@@ -18,11 +18,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <HeroSection
-        backgroundImage="/images/bg_1.jpg"
-        title="Fast & Easy Way To Rent A Car"
-        description="A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts"
-      />
+      <HeroSection />
       <BookingSection />
       <FeaturedVehiclesSection
         vehicles={ListOfVehicles}

@@ -3,7 +3,7 @@ import VehicleGrid from '../../components/Sections/VehicleCardSection';
 import { ListOfVehicles } from "../../utils/Mock/mockVehicles";
 import '../../index.css';
 
-const Motorcycles: React.FC = () => {
+const VehiclesGrid: React.FC = () => {
   const handleBookNow = (id: number) => {
     console.log(`Booking vehicle ${id}`);
   };
@@ -13,8 +13,8 @@ const Motorcycles: React.FC = () => {
   };
   
   const breadcrumbs = [
-    { text: 'Home', url: '/' },
-    { text: 'Motos', url: '/motos' }
+    { text: 'Inicio', url: '/' },
+    { text: 'Vehiculos', url: '/vehicles' }
   ];
 
   return (
@@ -35,4 +35,4 @@ const Motorcycles: React.FC = () => {
   );
 };
 
-export default Motorcycles;
+export default VehiclesGrid;

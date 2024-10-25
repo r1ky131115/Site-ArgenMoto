@@ -42,10 +42,10 @@ const VehicleGrid: React.FC<VehicleGridProps> = ({
   return (
     <section className={`ftco-section bg-light ${className}`}>
       <div className="container">
-        <div className="row">
+        <div ref={servicesRef} className="row ftco-animate">
           {getCurrentPageVehicles().map((vehicle) => (
             <div key={vehicle.id} className={columnClass}>
-              <div ref={servicesRef} className="car-wrap rounded">
+              <div ref={servicesRef} className="car-wrap rounded ">
                 <VehicleCard
                   vehicle={vehicle}
                   onBookNow={onBookNow}
