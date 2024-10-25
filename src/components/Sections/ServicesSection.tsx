@@ -1,25 +1,7 @@
 import React from 'react';
-import { DirectionsCar, Handshake, Sell } from '@mui/icons-material';
+import { ListServices } from '../../utils/ListServiceSection';
 
 const ServicesSection: React.FC = () => {
-    const services = [
-    {
-        icon: <DirectionsCar fontSize="large" color="action" />,
-        title: 'Venta',
-        description: 'Ofrecemos una amplia variedad de vehículos nuevos y usados, adaptados a tus necesidades y presupuesto.',
-    },
-    {
-        icon: <Sell fontSize="large" color="action" />,
-        title: 'Post-Venta',
-        description: 'Brindamos asistencia y soporte continuo para garantizar tu satisfacción y el óptimo rendimiento de tu vehículo.',
-    },
-    {
-        icon: <Handshake fontSize="large" color="action" />,
-        title: 'Atención continua',
-        description: 'Nuestro equipo está disponible para resolver cualquier consulta y ofrecerte asesoría en todo momento.',
-    },
-    ];
-
   return (
     <section className="ftco-section">
       <div className="container">
@@ -30,7 +12,7 @@ const ServicesSection: React.FC = () => {
           </div>
         </div>
         <div className="row">
-          {services.map((service, index) => (
+          {ListServices.map((service, index) => (
             <div className="col-md-4" key={index}>
               <div className="services services-2 w-100 text-center">
                 <div className="icon d-flex align-items-center justify-content-center">
