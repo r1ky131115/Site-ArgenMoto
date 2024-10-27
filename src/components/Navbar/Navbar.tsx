@@ -74,8 +74,8 @@ const Navbar: React.FC = () => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink 
-                to="/perfil" 
+            <NavLink 
+                to="/loginPage" // Asegúrate que la ruta coincida con la que definiste en tus rutas
                 className={({ isActive }) => 
                   `nav-link ${isActive ? 'active' : ''}`
                 }
