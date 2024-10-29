@@ -1,0 +1,61 @@
+/* src/components/RegisterForm.css */
+
+form {
+    text-align: center;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+div {
+    margin-bottom: 20px;
+    text-align: left;
+}
+label {
+    display: block; 
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333; 
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 10px; /* Espacio adicional debajo del input */
+}
+
+input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+    outline: none;
+}
+
+button {
+    padding: 10px;  /* alto de boton */
+    font-size: 16px;
+    color: #fff;
+    background-color: #35bd90;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2cae7e;
+}
+
+button:disabled {
+    background-color: #c1c1c1;
+    cursor: not-allowed;
+}

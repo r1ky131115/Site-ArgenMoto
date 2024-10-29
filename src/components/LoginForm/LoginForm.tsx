@@ -1,8 +1,10 @@
-// src/components/LoginForm.tsx
+// src/components/LoginForm/LoginForm.tsx
+
 import React, { useState } from 'react';
 import { LoginCredentials } from '../../types/auth';
+import { Link, Routes } from 'react-router-dom'; // Importa el Link de react-router-dom
 import './LoginForm.css';
-
+import RegisterPage from '../../pages/RegisterPage/RegisterPage';
 
 interface LoginFormProps {
   onLogin: (credentials: LoginCredentials) => void;
@@ -20,7 +22,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="email ">Email </label>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           id="email"
@@ -30,7 +32,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         />
       </div>
       <div>
-        <label htmlFor="password ">Password </label>
+        <label htmlFor="password">Contraseña</label>
         <input
           type="password"
           id="password"
@@ -39,9 +41,25 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           required
         />
       </div>
-      <button type="submit">Login</button>
+      <button type="submit">Iniciar Sesión</button>
+
+      {/* Enlace de registro */}
+      <p className="register-link">
+        ¿Aún no tienes cuenta?{' '}
+        <Link to="/register">Regístrate aquí</Link>
+      </p>
     </form>
   );
 };
 
 export default LoginForm;
+
+
+
+
+
+
+
+
+
+
