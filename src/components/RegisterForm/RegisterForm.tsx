@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createUser } from '../../services/api';
+import { createUser } from '../../services/UserAPI';
 import SuccessModal from '../Modal/SuccessModal';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';

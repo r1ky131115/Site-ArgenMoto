@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ArticleCard from '../Card/ArticleCard';
 import { ArticleProps } from '../../types/ArticleProps';
 import Pagination from '../Pagination';
 import useAnimateOnScroll from '../../hooks/useAnimateOnScroll';
-import '../../styles/animation.css'
+import { getArticles } from '../../services/ArticleAPI';
+import '../../styles/animation.css';
 
 interface VehicleGridProps {
-  vehicles: ArticleProps[];
   itemsPerPage?: number;
   itemsPerRow?: number;
   onBookNow: (id: number) => void;
@@ -16,15 +16,29 @@ interface VehicleGridProps {
 
 // Componente principal de la grilla
 const VehicleGrid: React.FC<VehicleGridProps> = ({
-  vehicles,
   itemsPerPage = 9,
   itemsPerRow = 3,
   onBookNow,
   onViewDetails,
   className = ''
 }) => {
+  const [vehicles, setVehicles] = useState<ArticleProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const servicesRef = useAnimateOnScroll<HTMLDivElement>();
+
+  // Obtener los artículos al montar el componente
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const articles = await getArticles();
+        setVehicles(articles);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchArticles();
+  }, []); // Solo se ejecuta una vez al montar
 
   // Calcular el total de páginas
   const totalPages = Math.ceil(vehicles.length / itemsPerPage);
@@ -45,7 +59,7 @@ const VehicleGrid: React.FC<VehicleGridProps> = ({
         <div ref={servicesRef} className="row ftco-animate">
           {getCurrentPageVehicles().map((vehicle) => (
             <div key={vehicle.id} className={columnClass}>
-              <div ref={servicesRef} className="car-wrap rounded ">
+              <div className="car-wrap rounded">
                 <ArticleCard
                   vehicle={vehicle}
                   onBookNow={() => onBookNow(vehicle.id)} // Llama a onBookNow con el ID del vehículo

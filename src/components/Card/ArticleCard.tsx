@@ -9,15 +9,18 @@ import { ArticleProps } from '../../types/ArticleProps';
 
 // Componente de tarjeta individual
 const ArticleCard: React.FC<{
+
     vehicle: ArticleProps;
     onBookNow: () => void;
     onViewDetails: () => void;
   }> = ({ vehicle, onBookNow, onViewDetails }) => {
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 180 }}
-        image={vehicle.imageUrl}
+        image='images/image_2.jpg'
+        // image={vehicle.imageUrl}
         title={vehicle.marca}
       />
       <CardContent>

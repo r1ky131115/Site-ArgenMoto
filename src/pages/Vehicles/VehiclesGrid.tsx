@@ -25,12 +25,11 @@ const VehiclesGrid: React.FC = () => {
         breadcrumbs={breadcrumbs}
       />
       <VehicleGrid
-      vehicles={ListOfVehicles}
-      itemsPerPage={9}  // Opcional: por defecto es 9
-      itemsPerRow={3}   // Opcional: por defecto es 3
-      onBookNow={handleBookNow}
-      onViewDetails={handleViewDetails}
-    />
+        itemsPerPage={9}  // Opcional: por defecto es 9
+        itemsPerRow={3}   // Opcional: por defecto es 3
+        onBookNow={handleBookNow}
+        onViewDetails={handleViewDetails}
+      />
     </>
   );
 };
