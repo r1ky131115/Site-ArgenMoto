@@ -22,11 +22,12 @@ const LoginForm: React.FC = () => {
     const credentials: LoginCredentials = { email, password };
 
     try {
-      // Llama al servicio de login
-      await login(credentials);
-      
-      console.log('fin del login')
-      navigate('/'); // Redirige a la página deseada
+
+      const response = await login(credentials);
+
+      console.log('Login exitoso:', response);
+      navigate('/'); // Redirigir a la página deseada
+      window.scrollTo(0, 0);
     } catch (err: any) {
       setError(err.message || 'Error en el inicio de sesión');
     } finally {
@@ -62,9 +63,6 @@ const LoginForm: React.FC = () => {
         </div>
       </div>
 
-      {/* Mostrar error si existe */}
-      {error && <p className="error-message">{error}</p>}
-
       <Button 
         className='btn-login mt-4'
         variant="contained" 
@@ -74,6 +72,9 @@ const LoginForm: React.FC = () => {
       >
         {loading ? 'Iniciando...' : 'Iniciar Sesión'}
       </Button>
+
+      {/* Mostrar error si existe */}
+      {error && <p className="error-message">{error}</p>}
 
       {/* Enlace de registro */}
       <p className="register-link">
