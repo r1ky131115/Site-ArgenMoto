@@ -1,121 +1,37 @@
-/* src/components/LoginForm.css */
-
-form {
-    text-align: center;
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    max-width: 400px;
-    margin: 0 auto;
-    background-color: #f9f9f9; 
-    padding: 30px;
-    border-radius: 8px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-}
-
-
-div {
-    margin-bottom: 20px;
-    text-align: left;
-    gap: 8px; 
+.form-login {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+  }
   
-}
-
-label {
-    display: block; 
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #333; 
-}
-
-input {
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ddd; 
-    border-radius: 5px; 
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-input:focus {
-    border-color: #4a90e2;
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); 
-    outline: none;
-}
-
-button {
-    padding: 12px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #35bd90; 
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #35bd90;
-}
-
-
-
-
-
-
-
-
-
-
-
-/* 
-
-
-div {
-    margin-bottom: 20px;
-    text-align: left;
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .form-container-login {
     display: flex;
     flex-direction: column;
-    gap: 8px; 
-}
-
-
-label {
-    display: block; 
-    margin-bottom: 8px;
+  }
+  
+  .lbl-login {
     font-weight: bold;
-    color: #333;
-}
-
-input {
-    padding: 12px;
+    margin-bottom: 5px;
+  }
+  
+  .input-login {
+    padding: 10px;
     font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    width: 100%; 
-    box-sizing: border-box; 
-}
-
-input:focus {
-    border-color: #4a90e2;
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
-    outline: none;
-}
-
-button {
-    padding: 12px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #35bd90;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px; 
-
-}
-
-button:hover {
-    background-color: #2ea17f; 
-}
-*/
+  }
+  
+  .btn-login {
+    width: 100%;
+  }
+  
+  .register-link {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  
