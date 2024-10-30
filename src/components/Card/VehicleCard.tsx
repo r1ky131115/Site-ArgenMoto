@@ -1,7 +1,7 @@
-import { VehicleCardProps } from "../../types/VehicleCardProps";
+import { ArticleCardProps } from "../../types/ArticleCardProps";
 
   // Componente de tarjeta individual
-const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onBookNow, onViewDetails }) => {
+const VehicleCard: React.FC<ArticleCardProps> = ({ vehicle, onBookNow, onViewDetails }) => {
   return (
     <div className="car-wrap rounded">
         <div 

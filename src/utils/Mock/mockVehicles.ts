@@ -1,6 +1,6 @@
-import { Vehicle } from "../../types/Vehicle";
+import { ArticleProps } from "../../types/ArticleProps";
 
-export const ListOfVehicles: Vehicle[] = [
+export const ListOfVehicles: ArticleProps[] = [
     {
       id: 1,
       name: 'Mercedes Grand Sedan',

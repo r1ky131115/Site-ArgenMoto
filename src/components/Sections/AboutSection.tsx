@@ -38,7 +38,7 @@ const AboutSection: React.FC = () => {
                     to="/" 
                     className="btn btn-primary py-2 px-3"
                 >
-                    Search Vehicle
+                    Search ArticleProps
                 </NavLink>
               </p>
             </div>

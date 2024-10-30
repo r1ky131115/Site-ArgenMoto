@@ -2,11 +2,11 @@ import React from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
-import { FeaturedVehiclesSectionProps } from "../../types/FeaturedVehiclesSectionProps";
+import { FeaturedAticlesSectionProps } from "../../types/FeaturedAticlesSectionProps";
 import VehicleCard from "../Card/VehicleCard";
 
 
-const FeaturedVehiclesSection: React.FC<FeaturedVehiclesSectionProps> = ({
+const FeaturedVehiclesSection: React.FC<FeaturedAticlesSectionProps> = ({
   vehicles,
   onBookNow,
   onViewDetails

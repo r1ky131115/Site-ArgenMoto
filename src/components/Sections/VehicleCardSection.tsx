@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import VehicleCard from '../Card/VehicleCard';
-import { Vehicle } from '../../types/Vehicle';
+import { ArticleProps } from '../../types/ArticleProps';
 import Pagination from '../Pagination';
 import useAnimateOnScroll from '../../hooks/useAnimateOnScroll';
 import '../../styles/animation.css'
 
 interface VehicleGridProps {
-  vehicles: Vehicle[];
+  vehicles: ArticleProps[];
   itemsPerPage?: number;
   itemsPerRow?: number;
   onBookNow: (id: number) => void;
