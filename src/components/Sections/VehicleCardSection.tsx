@@ -48,8 +48,8 @@ const VehicleGrid: React.FC<VehicleGridProps> = ({
               <div ref={servicesRef} className="car-wrap rounded ">
                 <ArticleCard
                   vehicle={vehicle}
-                  onBookNow={onBookNow}
-                  onViewDetails={onViewDetails}
+                  onBookNow={() => onBookNow(vehicle.id)} // Llama a onBookNow con el ID del vehículo
+                  onViewDetails={() => onViewDetails(vehicle.id)} // Llama a onViewDetails con el ID del vehículo
                 />
               </div>
             </div>

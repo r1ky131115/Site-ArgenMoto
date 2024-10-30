@@ -51,8 +51,8 @@ const FeaturedVehiclesSection: React.FC<FeaturedAticlesSectionProps> = ({
               <div className="item" key={vehicle.id}>
                 <ArticleCard
                   vehicle={vehicle}
-                  onBookNow={onBookNow}
-                  onViewDetails={onViewDetails}
+                  onBookNow={() => onBookNow(vehicle.id)} // Llama a onBookNow con el ID del vehículo
+                  onViewDetails={() => onViewDetails(vehicle.id)} // Llama a onViewDetails con el ID del vehículo
                 />
               </div>
             ))}
