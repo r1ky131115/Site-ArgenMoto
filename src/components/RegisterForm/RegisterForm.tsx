@@ -52,6 +52,7 @@ const RegisterForm: React.FC = () => {
   const handleModalClose = () => {
     setShowSuccessModal(false);
     navigate('/');
+    window.scrollTo(0, 0);
   };
 
   return (

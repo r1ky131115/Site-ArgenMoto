@@ -1,23 +1,37 @@
 import React, { useState } from 'react';
 import { LoginCredentials } from '../../types/auth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import { login } from '../../services/UserAPI';
 
-interface LoginFormProps {
-  onLogin: (credentials: LoginCredentials) => void;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
+const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    onLogin({ email, password });
     setLoading(true);
+    setError(null);
+
+    const credentials: LoginCredentials = { email, password };
+
+    try {
+      // Llama al servicio de login
+      await login(credentials);
+      
+      console.log('fin del login')
+      navigate('/'); // Redirige a la página deseada
+    } catch (err: any) {
+      setError(err.message || 'Error en el inicio de sesión');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,6 +61,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           />
         </div>
       </div>
+
+      {/* Mostrar error si existe */}
+      {error && <p className="error-message">{error}</p>}
+
       <Button 
         className='btn-login mt-4'
         variant="contained" 
@@ -54,7 +72,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         disabled={loading} 
         endIcon={<SendIcon />}
       >
-        Iniciar Sesión
+        {loading ? 'Iniciando...' : 'Iniciar Sesión'}
       </Button>
 
       {/* Enlace de registro */}
@@ -66,13 +84,3 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 };
 
 export default LoginForm;
-
-
-
-
-
-
-
-
-
-
