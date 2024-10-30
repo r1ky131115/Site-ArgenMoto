@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import VehicleCard from '../Card/VehicleCard';
+import ArticleCard from '../Card/ArticleCard';
 import { ArticleProps } from '../../types/ArticleProps';
 import Pagination from '../Pagination';
 import useAnimateOnScroll from '../../hooks/useAnimateOnScroll';
@@ -46,7 +46,7 @@ const VehicleGrid: React.FC<VehicleGridProps> = ({
           {getCurrentPageVehicles().map((vehicle) => (
             <div key={vehicle.id} className={columnClass}>
               <div ref={servicesRef} className="car-wrap rounded ">
-                <VehicleCard
+                <ArticleCard
                   vehicle={vehicle}
                   onBookNow={onBookNow}
                   onViewDetails={onViewDetails}
