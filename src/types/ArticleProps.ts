@@ -2,7 +2,7 @@ export interface ArticleProps {
     id: number;
     codigo: string;
     descripcion: string;
-    price: number;
+    precio: number;
     marca: string;
     modelo: string;
     anio: number;

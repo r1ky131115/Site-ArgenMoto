@@ -31,7 +31,7 @@ const ArticleCard: React.FC<{
           {vehicle.descripcion}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.primary' }}>
-          Precio: ${vehicle.price}
+          Precio: ${vehicle.precio}
         </Typography>
       </CardContent>
       <CardActions>

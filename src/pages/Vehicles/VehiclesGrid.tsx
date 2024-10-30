@@ -1,6 +1,5 @@
 import PageHeader from '../../components/Header/PageHeader';
 import VehicleGrid from '../../components/Sections/VehicleCardSection';
-import { ListOfVehicles } from "../../utils/Mock/mockVehicles";
 import '../../index.css';
 
 const VehiclesGrid: React.FC = () => {

@@ -1,4 +1,3 @@
-// src/types/auth.d.ts
 export interface LoginCredentials {
     email: string;
     password: string;

@@ -26,7 +26,6 @@ const VehicleGrid: React.FC<VehicleGridProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const servicesRef = useAnimateOnScroll<HTMLDivElement>();
 
-  // Obtener los artículos al montar el componente
   useEffect(() => {
     const fetchArticles = async () => {
       try {
@@ -38,7 +37,7 @@ const VehicleGrid: React.FC<VehicleGridProps> = ({
     };
 
     fetchArticles();
-  }, []); // Solo se ejecuta una vez al montar
+  }, []);
 
   // Calcular el total de páginas
   const totalPages = Math.ceil(vehicles.length / itemsPerPage);

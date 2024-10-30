@@ -1,13 +1,17 @@
+import React, { useEffect, useState } from 'react';
 import HeroSection from '../../components/Hero/HeroSection';
 import BookingSection from '../../components/Booking/BookingSection';
 import FeaturedVehiclesSection from '../../components/Sections/FeaturedVehiclesSection';
-import { ListOfVehicles } from "../../utils/Mock/mockVehicles";
 import AboutSection from '../../components/Sections/AboutSection';
 import '../../index.css';
 import ServicesSection from '../../components/Sections/ServicesSection';
 import CounterSection from '../../components/Sections/CounterSection';
+import { ArticleProps } from '../../types/ArticleProps';
+import { getArticles } from '../../services/ArticleAPI';
 
 const Home: React.FC = () => {
+  const [vehicles, setVehicles] = useState<ArticleProps[]>([]);
+  
   const handleBookNow = (id: number) => {
     console.log(`Booking vehicle ${id}`);
   };
@@ -15,13 +19,27 @@ const Home: React.FC = () => {
   const handleViewDetails = (id: number) => {
     console.log(`Viewing details for vehicle ${id}`);
   };
+  
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const articles = await getArticles();
+        setVehicles(articles);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchArticles();
+  }, []);
 
   return (
     <>
       <HeroSection />
       <BookingSection />
       <FeaturedVehiclesSection
-        vehicles={ListOfVehicles}
+        vehicles={vehicles}
         onBookNow={handleBookNow}
         onViewDetails={handleViewDetails}
       />

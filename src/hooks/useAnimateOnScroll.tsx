@@ -13,7 +13,6 @@ const useAnimateOnScroll = <T extends HTMLElement>() => {
             
             setTimeout(() => {
               const elements = document.querySelectorAll('.ftco-animate.item-animate');
-              console.log(elements)
               elements.forEach((el, index) => {
                 setTimeout(() => {
                   const animateEffect = el.getAttribute('data-animate-effect');
