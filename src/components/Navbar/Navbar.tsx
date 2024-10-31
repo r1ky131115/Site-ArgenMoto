@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import NavbarToggleButton from '../Buttons/NavbarToggleButton';
 import { SupervisedUserCircleSharp } from '@mui/icons-material';
+import './Navbar.css'
 
 const Navbar: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const location = useLocation();
 
   const handleToggle = () => {
     setIsCollapsed(!isCollapsed);
@@ -14,8 +16,16 @@ const Navbar: React.FC = () => {
     setIsCollapsed(true);
   };
 
+  // Determinar si estamos en el panel de usuario
+  const isInPanel = location.pathname.startsWith('/panel');
+
+  // Clase adicional para el navbar cuando estamos en el panel
+  const navbarClass = `navbar navbar-expand-lg navbar-dark ftco_navbar ${
+    isInPanel ? 'bg-panel-dark' : 'bg-dark'
+  } ftco-navbar-light`;
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <nav className={navbarClass} id="ftco-navbar">
       <div className="container">
         <NavLink className="navbar-brand" to="/">
           Argen<span>Moto</span>
@@ -35,7 +45,7 @@ const Navbar: React.FC = () => {
                   `nav-link ${isActive ? 'active' : ''}`
                 }
                 onClick={handleNavLinkClick}
-                end  // Asegura que solo coincida con la ruta exacta
+                end
               >
                 Inicio
               </NavLink>
@@ -74,16 +84,16 @@ const Navbar: React.FC = () => {
               </NavLink>
             </li>
             <li className="nav-item">
-            <NavLink 
-              to="/login"
-              className={({ isActive }) => 
-                `nav-link ${isActive ? 'active' : ''}`
-              }
-              onClick={handleNavLinkClick}
-            >
-              Perfil&nbsp;
-              <SupervisedUserCircleSharp className='mb-2' />
-            </NavLink>
+              <NavLink 
+                to="/login"
+                className={({ isActive }) => 
+                  `nav-link ${isActive ? 'active' : ''}`
+                }
+                onClick={handleNavLinkClick}
+              >
+                Perfil&nbsp;
+                <SupervisedUserCircleSharp className='mb-2' />
+              </NavLink>
             </li>
           </ul>
         </div>

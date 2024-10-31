@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, LayoutDashboard, ShoppingCart, Calendar } from 'lucide-react';
+import { Menu, LayoutDashboard, ShoppingCart, Calendar, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Datos } from './Datos';
 import { Pedidos } from './Pedidos';
@@ -21,13 +21,10 @@ const PanelControl: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState('datos');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   
-  // Obtener contexto de autenticación
   const { isAuthenticated, userRole, logout } = useAuth();
-
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Si no está autenticado, redirigir al login
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
@@ -50,32 +47,30 @@ const PanelControl: React.FC = () => {
     }
   };
 
-  // Definir menú de opciones
   const menuItems: MenuItem[] = [
     { 
       id: 'datos', 
       title: 'Datos', 
-      icon: <LayoutDashboard />, 
+      icon: <LayoutDashboard className="w-5 h-5" />, 
       roles: ['Admin', 'Cliente'], 
       component: <Datos /> 
     },
     { 
       id: 'pedidos', 
       title: 'Pedidos', 
-      icon: <ShoppingCart />, 
+      icon: <ShoppingCart className="w-5 h-5" />, 
       roles: ['Admin', 'Cliente'], 
       component: <Pedidos /> 
     },
     { 
       id: 'turnos', 
       title: 'Turnos', 
-      icon: <Calendar />, 
+      icon: <Calendar className="w-5 h-5" />, 
       roles: ['Admin', 'Cliente'], 
       component: <div>Turnos Component</div> 
     },
   ];
 
-  // Filtrar elementos del menú según el rol del usuario
   const filteredMenuItems = menuItems.filter(item => 
     item.roles.includes(userRole as UserRole)
   );
@@ -83,40 +78,54 @@ const PanelControl: React.FC = () => {
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   return (
-    <div className="panel-control">
-      {/* Sidebar */}
-      <div className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
-        <button onClick={toggleSidebar} className="toggle-sidebar-btn">
-          <Menu />
-        </button>
-        <div className="menu-items">
-          {filteredMenuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setSelectedOption(item.id)}
-              className={`menu-item ${selectedOption === item.id ? 'active' : ''}`}
-            >
-              {item.icon}
-              {isSidebarOpen && <span>{item.title}</span>}
-            </button>
-          ))}
-        </div>
-        <button onClick={handleLogout} className="logout-btn">
-          Cerrar Sesión
-        </button>
-      </div>
+    <div className="ftco-section">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="panel-dashboard">
+              {/* Sidebar */}
+              <div className={`dashboard-sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
+                <button 
+                  onClick={toggleSidebar} 
+                  className="toggle-btn"
+                >
+                  <Menu className="w-6 h-6" />
+                </button>
+                
+                <div className="menu-container">
+                  {filteredMenuItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => setSelectedOption(item.id)}
+                      className={`menu-option ${selectedOption === item.id ? 'active' : ''}`}
+                    >
+                      {item.icon}
+                      {isSidebarOpen && <span className="menu-text">{item.title}</span>}
+                    </button>
+                  ))}
+                  
+                  <button onClick={handleLogout} className="logout-option">
+                    {isSidebarOpen ? (
+                      <span className="menu-text">Cerrar Sesión</span>
+                    ) : (
+                      <LogOut className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
 
-      {/* Main Content */}
-      <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-        {renderComponent()}
+              {/* Content Area */}
+              <div className={`dashboard-content ${isSidebarOpen ? 'with-sidebar' : 'without-sidebar'}`}>
+                <div className="content-wrapper">
+                  {renderComponent()}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-// Página del Panel de Control
-const PanelControlPage: React.FC = () => {
-  return <PanelControl />;
-};
-
-export default PanelControlPage;
+export default PanelControl;
