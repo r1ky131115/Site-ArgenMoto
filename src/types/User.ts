@@ -21,3 +21,8 @@ export interface CreateUserDTO {
     email: string;
     password: string;
   }
+
+  export interface User {
+    id: string;
+    rol: string;
+  }

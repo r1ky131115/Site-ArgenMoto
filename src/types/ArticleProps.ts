@@ -9,3 +9,11 @@ export interface ArticleProps {
     cilindro: string;
     imageUrl: string;
   }
+
+export interface Articulo {
+  id: number;
+  codigoArticulo: string;
+  descripcion: string;
+  marca: string;
+  modelo: string;
+}

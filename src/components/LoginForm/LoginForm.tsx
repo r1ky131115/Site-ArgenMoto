@@ -21,7 +21,8 @@ const LoginForm: React.FC = () => {
 
     try {
       const response = await login({ email, password });
-      authLogin(response.token, response.role);
+      
+      authLogin(response.token, response.usuario);
       
       // Usar window.location para la redirección final
       const from = location.state?.from || '/panel';

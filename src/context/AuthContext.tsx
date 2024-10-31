@@ -1,17 +1,20 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { User } from '../types/User';
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  userRole: string | null;
-  login: (token: string, role: string) => void;
+  user: User | null;
+  login: (token: string, user: User) => void;
   logout: () => void;
 }
+
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userRole, setUserRole] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [role, setUserRole] = useState<string | null>(null);
 
   // Función para validar el token
   const validateToken = (token: string | null): boolean => {
@@ -41,42 +44,51 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Limpiar cualquier estado de autenticación al montar el componente
     setIsAuthenticated(false);
+    setUser(null);
     setUserRole(null);
 
     // Verificar token al cargar
     const token = localStorage.getItem('token');
-    const rol = localStorage.getItem('userRole');
+    const user = localStorage.getItem('usuario');
+    const role = localStorage.getItem('role');
 
     console.log('Token en localStorage:', token);
-    console.log('Role en localStorage:', rol);
+    console.log('Usuario en localStorage:', JSON.stringify(user));
+    console.log('Role en localStorage:', role);
 
-    if (token && rol) {
+    if (token && user && role) {
       const isValidToken = validateToken(token);
       console.log('¿Token válido?:', isValidToken);
+      const parsedUser = JSON.parse(user);
 
       if (isValidToken) {
         setIsAuthenticated(true);
-        setUserRole(rol);
+        setUser(parsedUser);
+        setUserRole(role);
       } else {
         // Si el token no es válido, limpiar todo
         localStorage.removeItem('token');
-        localStorage.removeItem('userRole');
+        localStorage.removeItem('usuario');
+        localStorage.removeItem('role');
       }
     }
   }, []);
 
-  const login = (token: string, rol: string) => {
-    console.log('Login ejecutado con token:', token, 'y role:', rol);
-    
+  const login = (token: string, user: User) => {
+    console.log('Login ejecutado con token:', token, ', usuario', user.id ,' y role:', user.rol);
+    const { rol } = user;
+
     if (!token || !rol) {
       console.error('Intento de login sin token o role');
       return;
     }
 
     localStorage.setItem('token', token);
-    localStorage.setItem('userRole', rol);
+    localStorage.setItem('usuario', JSON.stringify(user));
+    localStorage.setItem('role', rol);
     
     setIsAuthenticated(true);
+    setUser(user);
     setUserRole(rol);
   };
 
@@ -84,8 +96,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     console.log('Logout ejecutado');
     
     localStorage.removeItem('token');
-    localStorage.removeItem('userRole');
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('role');
     setIsAuthenticated(false);
+    setUser(null);
     setUserRole(null);
   };
 
@@ -93,12 +107,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     console.log('Estado de autenticación actualizado:', {
       isAuthenticated,
-      userRole
+      user,
+      role
     });
-  }, [isAuthenticated, userRole]);
+  }, [isAuthenticated, user, role]);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, userRole, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

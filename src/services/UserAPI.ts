@@ -39,7 +39,8 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       // Token inválido o expirado
       localStorage.removeItem('token');
-      localStorage.removeItem('userRole');
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
       // Redirigir al login?
     }
     return Promise.reject(error);
@@ -50,16 +51,18 @@ api.interceptors.response.use(
 export const login = async (credentials: LoginCredentials) => {
   try {
     const response = await api.post('/Usuarios/login', credentials);
-    const { token, rol } = response.data;
+    const { token, usuario, rol } = response.data;
 
-    if (token && rol) {
+    if (token && usuario && rol) {
       localStorage.setItem('token', token);
-      localStorage.setItem('userRole', rol);
+      localStorage.setItem('usuario', usuario);
+      localStorage.setItem('role', rol);
+
       // Establecer el token inmediatamente para la sesión actual
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       console.log('Token almacenado:', token);
+      console.log('Usuario almacenado:', usuario);
       console.log('Rol almacenado:', rol);
-
     }
 
     return response.data;
@@ -104,7 +107,8 @@ export const isAuthenticated = () => {
 // Función para cerrar sesión
 export const logout = () => {
   localStorage.removeItem('token');
-  localStorage.removeItem('userRole');
+  localStorage.removeItem('usuario');
+  localStorage.removeItem('role');
   delete api.defaults.headers.common['Authorization'];
 };
 

@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Datos } from './Datos';
 import { Pedidos } from './Pedidos';
 import './PanelControl.css';
+import { Turnos } from './Turnos';
 
 // Tipos de usuarios permitidos
 type UserRole = 'Admin' | 'Cliente';
@@ -21,7 +22,7 @@ const PanelControl: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState('datos');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   
-  const { isAuthenticated, userRole, logout } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ const PanelControl: React.FC = () => {
       case 'pedidos':
         return <Pedidos />;
       case 'turnos':
-        return <div>Turnos Component</div>;
+        return <Turnos />;
       default:
         return <div>Seleccione una opción</div>;
     }
@@ -72,7 +73,7 @@ const PanelControl: React.FC = () => {
   ];
 
   const filteredMenuItems = menuItems.filter(item => 
-    item.roles.includes(userRole as UserRole)
+    item.roles.includes(user?.rol as UserRole)
   );
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);

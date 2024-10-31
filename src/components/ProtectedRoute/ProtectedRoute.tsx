@@ -11,7 +11,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   element, 
   allowedRoles = [] 
 }) => {
-  const { isAuthenticated, userRole } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const location = useLocation();
 
   // Si no está autenticado, redirigir a login
@@ -21,7 +21,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   // Si está autenticado pero no tiene el rol adecuado
-  if (allowedRoles.length > 0 && (!userRole || !allowedRoles.includes(userRole))) {
+  if (allowedRoles.length > 0 && (!user?.rol || !allowedRoles.includes(user.rol))) {
     // Redirigir al home sin usar state
     return <Navigate to="/" replace />;
   }
