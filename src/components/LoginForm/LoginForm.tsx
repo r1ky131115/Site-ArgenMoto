@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { LoginCredentials } from '../../types/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import './LoginForm.css';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
@@ -11,26 +11,23 @@ const LoginForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  const navigate = useNavigate();
-
+  const location = useLocation();
+  const { login: authLogin } = useAuth();
+  
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
     setError(null);
 
-    const credentials: LoginCredentials = { email, password };
-
     try {
-
-      const response = await login(credentials);
-
-      console.log('Login exitoso:', response);
-      navigate('/'); // Redirigir a la página deseada
-      window.scrollTo(0, 0);
+      const response = await login({ email, password });
+      authLogin(response.token, response.role);
+      
+      // Usar window.location para la redirección final
+      const from = location.state?.from || '/panel';
+      window.location.href = from;
     } catch (err: any) {
       setError(err.message || 'Error en el inicio de sesión');
-    } finally {
       setLoading(false);
     }
   };

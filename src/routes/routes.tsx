@@ -1,23 +1,49 @@
-// src\routes\routes.tsx
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../components/Layout/Layout';
 import Home from '../pages/Home/Home';
 import VehiclesGrid from '../pages/Vehicles/VehiclesGrid';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
-// import SpareParts from '../pages/SpareParts/SpareParts';
-// import Contact from '../pages/Contact/Contact';
+import PanelControlPage from '../pages/PanelControl/PanelControlPage';
+import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
+import { AuthProvider } from '../context/AuthContext';
+
+const AppWrapper = ({ children }: { children: React.ReactNode }) => (
+  <AuthProvider>
+    {children}
+  </AuthProvider>
+);
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: <AppWrapper><Layout /></AppWrapper>,
     children: [
-      { path: '/', element: <Home /> },
-      { path: '/vehicles', element: <VehiclesGrid /> },
-      { path: '/loginPage', element: <LoginPage /> },
-      { path: '/register', element: <RegisterPage/>}
-      // { path: '/contacto', element: <Contact /> },
+      { 
+        path: '/', 
+        element: <Home /> 
+      },
+      { 
+        path: '/vehicles', 
+        element: <VehiclesGrid /> 
+      },
+      { 
+        path: '/login', 
+        element: <LoginPage /> 
+      },
+      { 
+        path: '/register', 
+        element: <RegisterPage /> 
+      },
+      { 
+        path: '/panel', 
+        element: (
+          <ProtectedRoute 
+            element={<PanelControlPage />} 
+            allowedRoles={['Admin', 'Cliente']} 
+          />
+        )
+      },
     ],
   },
 ]);

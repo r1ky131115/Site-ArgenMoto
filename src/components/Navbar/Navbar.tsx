@@ -75,15 +75,15 @@ const Navbar: React.FC = () => {
             </li>
             <li className="nav-item">
             <NavLink 
-                to="/loginPage" // Asegúrate que la ruta coincida con la que definiste en tus rutas
-                className={({ isActive }) => 
-                  `nav-link ${isActive ? 'active' : ''}`
-                }
-                onClick={handleNavLinkClick}
-              >
-                Perfil&nbsp;
-                <SupervisedUserCircleSharp className='mb-2' />
-              </NavLink>
+              to="/login"
+              className={({ isActive }) => 
+                `nav-link ${isActive ? 'active' : ''}`
+              }
+              onClick={handleNavLinkClick}
+            >
+              Perfil&nbsp;
+              <SupervisedUserCircleSharp className='mb-2' />
+            </NavLink>
             </li>
           </ul>
         </div>
