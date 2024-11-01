@@ -1,6 +1,5 @@
 import PageHeader from '../../components/Header/PageHeader';
 import VehicleGrid from '../../components/Sections/VehicleCardSection';
-import { ListOfVehicles } from "../../utils/Mock/mockVehicles";
 import '../../index.css';
 
 const VehiclesGrid: React.FC = () => {
@@ -25,12 +24,11 @@ const VehiclesGrid: React.FC = () => {
         breadcrumbs={breadcrumbs}
       />
       <VehicleGrid
-      vehicles={ListOfVehicles}
-      itemsPerPage={9}  // Opcional: por defecto es 9
-      itemsPerRow={3}   // Opcional: por defecto es 3
-      onBookNow={handleBookNow}
-      onViewDetails={handleViewDetails}
-    />
+        itemsPerPage={9}  // Opcional: por defecto es 9
+        itemsPerRow={3}   // Opcional: por defecto es 3
+        onBookNow={handleBookNow}
+        onViewDetails={handleViewDetails}
+      />
     </>
   );
 };

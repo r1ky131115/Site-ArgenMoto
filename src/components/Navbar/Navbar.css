@@ -1,0 +1,31 @@
+ 
+  /* Estilo del navbar en el panel */
+  .navbar.bg-panel-dark {
+    background-color: #343a40 !important; /* Azul oscuro */
+    /* O puedes usar otros colores como: */
+    /* background-color: #1b1b1b !important; */ /* Negro más claro */
+    /* background-color: #263238 !important; */ /* Azul grisáceo oscuro */
+    /* background-color: #311b92 !important; */ /* Púrpura oscuro */
+    
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Opcional: Modificar el color de los links en el panel */
+  .navbar.bg-panel-dark .nav-link {
+    color: rgba(255,255,255,0.9) !important;
+  }
+  
+  .navbar.bg-panel-dark .nav-link:hover {
+    color: #fff !important;
+  }
+  
+  /* Opcional: Modificar el color del brand en el panel */
+  .navbar.bg-panel-dark .navbar-brand {
+    color: #fff !important;
+  }
+  
+  /* Opcional: Modificar el color del toggle button en el panel */
+  .navbar.bg-panel-dark .navbar-toggler {
+    border-color: rgba(255,255,255,0.5);
+  }

@@ -2,11 +2,11 @@ import React from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
-import { FeaturedVehiclesSectionProps } from "../../types/FeaturedVehiclesSectionProps";
-import VehicleCard from "../Card/VehicleCard";
+import { FeaturedAticlesSectionProps } from "../../types/FeaturedAticlesSectionProps";
+import ArticleCard from "../Card/ArticleCard";
 
 
-const FeaturedVehiclesSection: React.FC<FeaturedVehiclesSectionProps> = ({
+const FeaturedVehiclesSection: React.FC<FeaturedAticlesSectionProps> = ({
   vehicles,
   onBookNow,
   onViewDetails
@@ -49,10 +49,10 @@ const FeaturedVehiclesSection: React.FC<FeaturedVehiclesSectionProps> = ({
           <OwlCarousel className="owl-theme" {...options}>
             {vehicles.map((vehicle) => (
               <div className="item" key={vehicle.id}>
-                <VehicleCard
+                <ArticleCard
                   vehicle={vehicle}
-                  onBookNow={onBookNow}
-                  onViewDetails={onViewDetails}
+                  onBookNow={() => onBookNow(vehicle.id)} // Llama a onBookNow con el ID del vehículo
+                  onViewDetails={() => onViewDetails(vehicle.id)} // Llama a onViewDetails con el ID del vehículo
                 />
               </div>
             ))}

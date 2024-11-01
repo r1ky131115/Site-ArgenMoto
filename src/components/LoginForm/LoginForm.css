@@ -1,0 +1,37 @@
+.form-login {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .form-container-login {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .lbl-login {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .input-login {
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .btn-login {
+    width: 100%;
+  }
+  
+  .register-link {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  
