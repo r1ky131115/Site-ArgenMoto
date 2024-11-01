@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
-import { Turno } from '../../types/Turno';
-import { createTurno, deleteTurno, getTurnos, updateTurno } from '../../services/TurnoService';
+import { useAuth } from '../../../context/AuthContext';
+import { Turno } from '../../../types/Turno';
+import { createTurno, deleteTurno, getTurnos, updateTurno } from '../../../services/TurnoService';
 import { 
   Card,
   CardContent,
@@ -17,8 +17,8 @@ import {
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { TurnoModal } from '../Modal/Turno/TurnoModal';
-import { CreateTurnoDTO, UpdateTurnoDTO } from '../../types/Turno';
+import { TurnoModal } from '../../Modal/Turno/TurnoModal';
+import { CreateTurnoDTO, UpdateTurnoDTO } from '../../../types/Turno';
 
 export const Turnos: React.FC = () => {
   const [turnos, setTurnos] = useState<Turno[]>([]);

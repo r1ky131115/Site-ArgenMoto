@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Datos } from './Datos';
 import { Pedidos } from './Pedidos';
 import './PanelControl.css';
-import { Turnos } from './Turnos';
+import { Turnos } from './Turnos/TurnosCliente';
 
 // Tipos de usuarios permitidos
 type UserRole = 'Admin' | 'Cliente';
@@ -67,7 +67,7 @@ const PanelControl: React.FC = () => {
       id: 'turnos', 
       title: 'Turnos', 
       icon: <Calendar className="w-5 h-5" />, 
-      roles: ['Admin', 'Cliente'], 
+      roles: ['Cliente'], 
       component: <div>Turnos Component</div> 
     },
   ];
