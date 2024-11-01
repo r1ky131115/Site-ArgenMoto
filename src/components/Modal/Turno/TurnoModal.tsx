@@ -9,36 +9,24 @@ import {
   Select,
   MenuItem,
   Grid,
-  SelectChangeEvent
+  SelectChangeEvent,
+  TextField
 } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { CreateTurnoDTO, UpdateTurnoDTO } from '../../../types/Turno';
-
-interface Cliente {
-  id: number;
-  nombre: string;
-}
-
-interface Articulo {
-  id: number;
-  descripcion: string;
-}
-
-interface Tecnico {
-  id: number;
-  nombre: string;
-}
+import { Tecnico } from '../../../types/Tecnico';
+import { Articulo } from '../../../types/ArticleProps';
 
 interface TurnoModalProps {
   open: boolean;
   onClose: () => void;
   onSubmit: (turno: CreateTurnoDTO | UpdateTurnoDTO) => Promise<void>;
   turnoToEdit?: UpdateTurnoDTO;
+  dataTurno: string;
   // Servicios para cargar las listas
-  fetchClientes: () => Promise<Cliente[]>;
   fetchArticulos: () => Promise<Articulo[]>;
   fetchTecnicos: () => Promise<Tecnico[]>;
 }
@@ -61,11 +49,10 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
   onClose,
   onSubmit,
   turnoToEdit,
-  fetchClientes,
+  dataTurno,
   fetchArticulos,
   fetchTecnicos
 }) => {
-  const [clientes, setClientes] = useState<Cliente[]>([]);
   const [articulos, setArticulos] = useState<Articulo[]>([]);
   const [tecnicos, setTecnicos] = useState<Tecnico[]>([]);
   const [loading, setLoading] = useState(true);
@@ -87,12 +74,10 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
       setLoading(true);
       setError(null);
       try {
-        const [clientesData, articulosData, tecnicosData] = await Promise.all([
-          fetchClientes(),
+        const [articulosData, tecnicosData] = await Promise.all([
           fetchArticulos(),
           fetchTecnicos()
         ]);
-        setClientes(clientesData);
         setArticulos(articulosData);
         setTecnicos(tecnicosData);
       } catch (err) {
@@ -109,7 +94,7 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
         setFormData(turnoToEdit);
       }
     }
-  }, [open, turnoToEdit, fetchClientes, fetchArticulos, fetchTecnicos]);
+  }, [open, turnoToEdit, fetchArticulos, fetchTecnicos]);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>
@@ -153,9 +138,6 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
     // Validación simple
     let errorMessages = [];
 
-    if (!formData.idCliente) {
-        errorMessages.push("Debe seleccionar un cliente.");
-    }
     if (!formData.idArticulo) {
         errorMessages.push("Debe seleccionar un artículo.");
     }
@@ -216,21 +198,12 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel id="cliente-label">Cliente</InputLabel>
-                <Select
-                  labelId="cliente-label"
-                  name="idCliente"
-                  value={formData.idCliente}
-                  onChange={handleSelectChange}
+                <TextField
+                  disabled
+                  id="outlined-disabled"
                   label="Cliente"
-                  required
-                >
-                  {clientes.map(cliente => (
-                    <MenuItem key={cliente.id} value={cliente.id}>
-                      {cliente.nombre}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  defaultValue={dataTurno}
+                />
               </FormControl>
             </Grid>
 
@@ -267,7 +240,7 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
                 >
                   {tecnicos.map(tecnico => (
                     <MenuItem key={tecnico.id} value={tecnico.id}>
-                      {tecnico.nombre}
+                      {`${tecnico.nombre} | ${tecnico.especialidad}`}
                     </MenuItem>
                   ))}
                 </Select>

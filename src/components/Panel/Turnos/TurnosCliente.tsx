@@ -19,6 +19,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TurnoModal } from '../../Modal/Turno/TurnoModal';
 import { CreateTurnoDTO, UpdateTurnoDTO } from '../../../types/Turno';
+import { getTecnicos } from '../../../services/TecnicoService';
+import { Tecnico } from '../../../types/Tecnico';
 
 export const Turnos: React.FC = () => {
   const [turnos, setTurnos] = useState<Turno[]>([]);
@@ -27,21 +29,21 @@ export const Turnos: React.FC = () => {
   const { user } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTurno, setSelectedTurno] = useState<UpdateTurnoDTO | undefined>();
-
-
-  const fetchClientes = async () => {
-    // Llamada a tu API
-    return []; // Retorna array de clientes
-  };
+  const [userName, setUser ] = useState<string>();
 
   const fetchArticulos = async () => {
     // Llamada a tu API
     return []; // Retorna array de artículos
   };
 
-  const fetchTecnicos = async () => {
-    // Llamada a tu API
-    return []; // Retorna array de técnicos
+  const fetchTecnicos = async (): Promise<Tecnico[]> => {
+    try {
+      const data = await getTecnicos();
+      return data;
+    } catch (err: any) {
+      setError(err.message);
+      return [];
+    }
   };
 
   const handleCreateOrUpdate = async (turnoData: CreateTurnoDTO | UpdateTurnoDTO) => {
@@ -79,7 +81,6 @@ export const Turnos: React.FC = () => {
       if (!user?.id) return;
       try {
         const fetchedTurnos = await getTurnos(user.id);
-        console.log(fetchedTurnos);
         setTurnos(fetchedTurnos);
         setError(null);
       } catch (err: any) {
@@ -251,7 +252,7 @@ export const Turnos: React.FC = () => {
         }}
         onSubmit={handleCreateOrUpdate}
         turnoToEdit={selectedTurno}
-        fetchClientes={fetchClientes}
+        dataTurno=""
         fetchArticulos={fetchArticulos}
         fetchTecnicos={fetchTecnicos}
       />
