@@ -50,6 +50,7 @@ api.interceptors.response.use(
 // Función de login mejorada
 export const login = async (credentials: LoginCredentials) => {
   try {
+    debugger
     const response = await api.post('/Usuarios/login', credentials);
     const { token, usuario, rol } = response.data;
 

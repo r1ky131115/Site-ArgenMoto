@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 import { Turno } from '../../../types/Turno';
-import { createTurno, deleteTurno, getTurnos, updateTurno } from '../../../services/TurnoService';
+import TurnoService from '../../../services/TurnoService';
 import { 
   Card,
   CardContent,
@@ -23,6 +23,7 @@ import { getTecnicos } from '../../../services/TecnicoService';
 import { Tecnico } from '../../../types/Tecnico';
 import { Articulo } from '../../../types/ArticleProps';
 import { getBasicArticles } from '../../../services/ArticleAPI';
+import utility from '../../../utils/format';
 
 export const Turnos: React.FC = () => {
   const [turnos, setTurnos] = useState<Turno[]>([]);
@@ -55,9 +56,9 @@ export const Turnos: React.FC = () => {
 
   const handleCreateOrUpdate = async (turnoData: CreateTurnoDTO | UpdateTurnoDTO) => {
     if ('id' in turnoData) {
-      await updateTurno(turnoData.id, turnoData);
+      await TurnoService.updateTurnoData(turnoData.id, turnoData);
     } else {
-      await createTurno(turnoData);
+      await TurnoService.createTurno(turnoData);
     }
     // Recargar la lista de turnos
     setModalOpen(false);
@@ -68,7 +69,7 @@ export const Turnos: React.FC = () => {
       id: turnoEdit.id,
       fecha: turnoEdit.fecha,
       hora: turnoEdit.hora,
-      estado: parseInt(turnoEdit.estado),
+      estado: turnoEdit.estado,
       idCliente: turnoEdit.cliente.id,
       idArticulo: turnoEdit.articulo.id,
       idTecnico: turnoEdit.tecnico.id
@@ -87,9 +88,21 @@ export const Turnos: React.FC = () => {
     const fetchTurnosData = async () => {
       if (!user?.id) return;
       try {
-        const fetchedTurnos = await getTurnos(user.id);
+        const fetchedTurnos = await TurnoService.getTurnos(user.id);
         setTurnos(fetchedTurnos);
-        setUser(fetchedTurnos[0].cliente.nombre + ' ' + fetchedTurnos[0].cliente.apellido)
+        if (fetchedTurnos.length > 0) {
+          setUser(fetchedTurnos[0].cliente.nombre + ' ' + fetchedTurnos[0].cliente.apellido);
+        } else {
+          const usuarioString = localStorage.getItem('usuario');
+          if (usuarioString) {
+              const usuario = JSON.parse(usuarioString);
+              const fullName = usuario.fullName;
+              setUser(fullName);
+          } else {
+              setUser('User')
+              console.log('No hay usuario guardado en localStorage');
+          }
+        }
         setError(null);
       } catch (err: any) {
         setError(err.message);
@@ -104,24 +117,15 @@ export const Turnos: React.FC = () => {
 
   const handleDelete = async (clienteId: number, turnoId: number) => {
     try {
-      await deleteTurno({
+      await TurnoService.deleteTurno({
         cliente_Id: clienteId,
         turno_Id: turnoId
       });
+      setTurnos(turnos);
       // Recargar la lista de turnos o mostrar mensaje de éxito
     } catch (error) {
       // Manejar el error
     }
-  };
-
-  // Función para formatear la fecha
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('es-AR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    }).format(date);
   };
 
   if (loading) {
@@ -172,7 +176,7 @@ export const Turnos: React.FC = () => {
                   title={
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                       <Typography variant="h6">
-                        Turno para {turno.fecha ? formatDate(turno.fecha) : 'Fecha no disponible'} - {turno.hora}
+                        Turno para {turno.fecha ? utility.formatDate(turno.fecha) : 'Fecha no disponible'} - {utility.formatTime(turno.hora)}
                       </Typography>
                       <Chip
                         label={turno.estado}

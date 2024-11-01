@@ -6,6 +6,7 @@ import { Datos } from './Datos';
 import { Pedidos } from './Pedidos';
 import './PanelControl.css';
 import { Turnos } from './Turnos/TurnosCliente';
+import TurnosList from './Turnos/TurnosAdmin';
 
 // Tipos de usuarios permitidos
 type UserRole = 'Admin' | 'Cliente';
@@ -41,6 +42,8 @@ const PanelControl: React.FC = () => {
         return <Datos />;
       case 'pedidos':
         return <Pedidos />;
+      case 'turnosList':
+        return <TurnosList />;
       case 'turnos':
         return <Turnos />;
       default:
@@ -64,11 +67,18 @@ const PanelControl: React.FC = () => {
       component: <Pedidos /> 
     },
     { 
+      id: 'turnosList', 
+      title: 'Turnos', 
+      icon: <Calendar className="w-5 h-5" />, 
+      roles: ['Admin'], 
+      component: <TurnosList />
+    },
+    { 
       id: 'turnos', 
       title: 'Turnos', 
       icon: <Calendar className="w-5 h-5" />, 
       roles: ['Cliente'], 
-      component: <div>Turnos Component</div> 
+      component: <Turnos /> 
     },
   ];
 

@@ -18,14 +18,14 @@ export interface CreateTurnoDTO {
   idTecnico: number;
   fecha: string;
   hora: string;
-  estado: number;
+  estado: string;
 }
 
 export interface UpdateTurnoDTO {
   id: number;
   fecha: string;
   hora: string;
-  estado: number;
+  estado: string;
   idCliente: number;
   idArticulo: number;
   idTecnico: number;
@@ -35,3 +35,5 @@ export interface DeleteTurnoDTO {
   cliente_Id: number;
   turno_Id: number;
 }
+
+export type TurnoEstado = 'Pendiente' | 'Finalizado';

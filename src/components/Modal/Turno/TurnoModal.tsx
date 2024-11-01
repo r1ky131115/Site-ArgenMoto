@@ -66,7 +66,7 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
     idTecnico: 0,
     fecha: new Date().toISOString().split('T')[0],
     hora: '09:00',
-    estado: turnoToEdit?.estado ?? 1
+    estado: turnoToEdit?.estado ?? 'Pendiente'
   });
 
   useEffect(() => {
@@ -281,7 +281,6 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
                   <Select
                     labelId="estado-label"
                     name="estado"
-                    value={formData.estado}
                     onChange={handleSelectChange}
                     label="Estado"
                     required
