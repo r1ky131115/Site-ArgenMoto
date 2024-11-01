@@ -60,13 +60,13 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
 
   // Form state
   const [formData, setFormData] = useState<CreateTurnoDTO | UpdateTurnoDTO>({
-    id: turnoToEdit?.id ?? 0,         // Asignar 0 o un valor predeterminado en caso de undefined
+    id: turnoToEdit?.id ?? 0,
     idCliente: 0,
     idArticulo: 0,
     idTecnico: 0,
     fecha: new Date().toISOString().split('T')[0],
     hora: '09:00',
-    estado: turnoToEdit?.estado ?? 1   // Asignar un valor predeterminado si estado no está definido
+    estado: turnoToEdit?.estado ?? 1
   });
 
   useEffect(() => {
@@ -96,15 +96,15 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
     }
   }, [open, turnoToEdit, fetchArticulos, fetchTecnicos]);
 
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>
-  ) => {
-    const { name, value } = event.target;
-    setFormData(prev => ({
-      ...prev,
-      [name as string]: value
-    }));
-  };
+  // const handleInputChange = (
+  //   event: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>
+  // ) => {
+  //   const { name, value } = event.target;
+  //   setFormData(prev => ({
+  //     ...prev,
+  //     [name as string]: value
+  //   }));
+  // };
 
   const handleSelectChange = (event: SelectChangeEvent<number>) => {
     const { name, value } = event.target;

@@ -21,6 +21,8 @@ import { TurnoModal } from '../../Modal/Turno/TurnoModal';
 import { CreateTurnoDTO, UpdateTurnoDTO } from '../../../types/Turno';
 import { getTecnicos } from '../../../services/TecnicoService';
 import { Tecnico } from '../../../types/Tecnico';
+import { Articulo } from '../../../types/ArticleProps';
+import { getBasicArticles } from '../../../services/ArticleAPI';
 
 export const Turnos: React.FC = () => {
   const [turnos, setTurnos] = useState<Turno[]>([]);
@@ -31,9 +33,14 @@ export const Turnos: React.FC = () => {
   const [selectedTurno, setSelectedTurno] = useState<UpdateTurnoDTO | undefined>();
   const [userName, setUser ] = useState<string>();
 
-  const fetchArticulos = async () => {
-    // Llamada a tu API
-    return []; // Retorna array de artículos
+  const fetchArticulos = async (): Promise<Articulo[]> => {
+    try {
+      const data = await getBasicArticles();
+      return data;
+    } catch (err: any) {
+      setError(err.message);
+      return [];
+    }
   };
 
   const fetchTecnicos = async (): Promise<Tecnico[]> => {
@@ -82,6 +89,7 @@ export const Turnos: React.FC = () => {
       try {
         const fetchedTurnos = await getTurnos(user.id);
         setTurnos(fetchedTurnos);
+        setUser(fetchedTurnos[0].cliente.nombre + ' ' + fetchedTurnos[0].cliente.apellido)
         setError(null);
       } catch (err: any) {
         setError(err.message);
@@ -252,7 +260,7 @@ export const Turnos: React.FC = () => {
         }}
         onSubmit={handleCreateOrUpdate}
         turnoToEdit={selectedTurno}
-        dataTurno=""
+        dataTurno={userName ?? 'User'}
         fetchArticulos={fetchArticulos}
         fetchTecnicos={fetchTecnicos}
       />
