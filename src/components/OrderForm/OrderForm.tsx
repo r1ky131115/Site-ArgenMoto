@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -15,81 +15,107 @@ import {
   Divider,
 } from '@mui/material';
 import { ShoppingCart, Package, DollarSign } from 'lucide-react';
-
-interface Product {
-  type: string;
-  quantity: number;
-  unitPrice: number;
-  totalPrice: number;
-}
-
-interface Provider {
-  id: string;
-  name: string;
-  address: string;
-  contact: string;
-}
+import { Proveedor } from '../../types/Proveedor';
+import { Articulo } from '../../types/ArticleProps';
+import { OrderDetail } from '../../types/OrdenDetail';
+import ProveedorService from '../../services/ProveedorService';
 
 const OrderForm = () => {
-  const [providers] = useState<Provider[]>([
-    { id: '1', name: 'Proveedor A', address: 'Calle Falsa 123', contact: '123-4567' },
-    { id: '2', name: 'Proveedor B', address: 'Avenida Siempreviva 742', contact: '987-6543' },
-    { id: '3', name: 'Proveedor C', address: 'Calle Luna 321', contact: '456-7890' },
-  ]);
+  const [proveedores, setProveedores] = useState<Proveedor[]>([]);
+  const [articulos, setArticulos] = useState<Articulo[]>([]);
+  const [selectedProveedor, setSelectedProveedor] = useState<Proveedor | null>(null);
+  const [selectedArticulo, setSelectedArticulo] = useState<Articulo | null>(null);
+  const [orderDetails, setOrderDetails] = useState<OrderDetail[]>([]);
+  const [cantidad, setCantidad] = useState(1);
 
-  const [selectedProvider, setSelectedProvider] = useState<Provider | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [productType, setProductType] = useState('');
-  const [quantity, setQuantity] = useState(0);
-
-  const unitPrices: { [key: string]: number } = {
-    productA: 10,
-    productB: 20,
-    productC: 15,
-  };
-
-  const calculateTotalPrice = () => unitPrices[productType] * quantity;
-
-  const handleAddProduct = () => {
-    if (!productType || quantity <= 0) return;
-    
-    const unitPrice = unitPrices[productType] || 0;
-    const newProduct: Product = {
-      type: productType,
-      quantity,
-      unitPrice,
-      totalPrice: calculateTotalPrice(),
+  // Fetch proveedores on component mount
+  useEffect(() => {
+    const fetchProveedores = async () => {
+      try {
+        const response = await ProveedorService.getProveedores();
+        if (!response) throw new Error('Error al cargar proveedores');
+        setProveedores(response);
+      } catch (error) {
+        console.error('Error:', error);
+      }
     };
-    setProducts([...products, newProduct]);
-    setProductType('');
-    setQuantity(0);
+    fetchProveedores();
+  }, []);
+
+  // Fetch artículos when provider is selected
+  useEffect(() => {
+    if (selectedProveedor) {
+      const fetchArticulos = async () => {
+        try {
+          const response = await fetch(`/api/articulos/proveedor/${selectedProveedor.id}`);
+          if (!response.ok) throw new Error('Error al cargar artículos');
+          const data = await response.json();
+          setArticulos(data);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      fetchArticulos();
+    }
+  }, [selectedProveedor]);
+
+  const handleAddDetail = () => {
+    if (!selectedArticulo || cantidad <= 0) return;
+
+    const newDetail: OrderDetail = {
+      idArticulo: selectedArticulo.id,
+      articulo: selectedArticulo,
+      cantidad: cantidad,
+      precio: selectedArticulo.precio,
+      subtotal: selectedArticulo.precio * cantidad
+    };
+
+    setOrderDetails([...orderDetails, newDetail]);
+    setSelectedArticulo(null);
+    setCantidad(1);
   };
 
   const handleGenerateOrder = async () => {
-    const orderDate = new Date().toLocaleDateString();
-    const totalAmount = products.reduce((sum, product) => sum + product.totalPrice, 0);
+    if (!selectedProveedor || orderDetails.length === 0) return;
 
+    const total = orderDetails.reduce((sum, detail) => sum + detail.subtotal, 0);
+    
     const orderData = {
-      provider: selectedProvider,
-      date: orderDate,
-      products,
-      total: totalAmount,
+      idProveedor: selectedProveedor.id,
+      razonSocial: selectedProveedor.razonSocial || `${selectedProveedor.apellido} ${selectedProveedor.nombre}`,
+      domicilio: selectedProveedor.domicilio,
+      localidad: selectedProveedor.localidad,
+      provincia: selectedProveedor.provincia,
+      fecha: new Date().toISOString(),
+      precioTotal: total,
+      precioReal: total, // You might want to adjust this based on your business logic
+      estado: "Pendiente",
+      ordenCompraDetalles: orderDetails.map(detail => ({
+        idArticulo: detail.idArticulo,
+        cantidad: detail.cantidad,
+        precio: detail.precio
+      }))
     };
 
     try {
-      const response = await fetch('/api/orders', {
+      const response = await fetch('/api/ordenescompra', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(orderData),
       });
-      if (!response.ok) {
-        throw new Error('Error al generar la orden de compra');
-      }
-      alert("Orden generada con éxito");
+
+      if (!response.ok) throw new Error('Error al generar la orden de compra');
+      
+      alert('Orden de compra generada exitosamente');
+      // Reset form
+      setSelectedProveedor(null);
+      setOrderDetails([]);
+      setCantidad(1);
     } catch (error) {
-      console.error(error);
+      console.error('Error:', error);
+      alert('Error al generar la orden de compra');
     }
   };
 
@@ -103,19 +129,19 @@ const OrderForm = () => {
               Orden de Compra
             </Typography>
 
-            {!selectedProvider ? (
+            {!selectedProveedor ? (
               <FormControl fullWidth sx={{ mb: 3 }}>
                 <InputLabel>Seleccionar Proveedor</InputLabel>
                 <Select
                   label="Seleccionar Proveedor"
                   onChange={(e) => {
-                    const provider = providers.find((p) => p.id === e.target.value);
-                    setSelectedProvider(provider || null);
+                    const provider = proveedores.find(p => p.id === e.target.value);
+                    setSelectedProveedor(provider || null);
                   }}
                 >
-                  {providers.map((provider) => (
-                    <MenuItem key={provider.id} value={provider.id}>
-                      {provider.name}
+                  {proveedores.map((proveedor) => (
+                    <MenuItem key={proveedor.id} value={proveedor.id}>
+                      {proveedor.razonSocial || `${proveedor.apellido}, ${proveedor.nombre}`}
                     </MenuItem>
                   ))}
                 </Select>
@@ -123,83 +149,98 @@ const OrderForm = () => {
             ) : (
               <Paper variant="outlined" sx={{ p: 2, mb: 3 }}>
                 <Typography variant="h6" gutterBottom>Proveedor Seleccionado</Typography>
-                <Typography><strong>Nombre:</strong> {selectedProvider.name}</Typography>
-                <Typography><strong>Dirección:</strong> {selectedProvider.address}</Typography>
-                <Typography><strong>Contacto:</strong> {selectedProvider.contact}</Typography>
+                <Typography><strong>Razón Social:</strong> {selectedProveedor.razonSocial || `${selectedProveedor.apellido}, ${selectedProveedor.nombre}`}</Typography>
+                <Typography><strong>CUIT:</strong> {selectedProveedor.cuit}</Typography>
+                <Typography><strong>Dirección:</strong> {selectedProveedor.domicilio}, {selectedProveedor.localidad}, {selectedProveedor.provincia}</Typography>
+                <Typography><strong>Contacto:</strong> {selectedProveedor.telefono} | {selectedProveedor.email}</Typography>
               </Paper>
             )}
 
-            {selectedProvider && (
+            {selectedProveedor && (
               <Box sx={{ mt: 3 }}>
                 <FormControl fullWidth sx={{ mb: 2 }}>
-                  <InputLabel>Tipo de Producto</InputLabel>
+                  <InputLabel>Seleccionar Artículo</InputLabel>
                   <Select
-                    value={productType}
-                    label="Tipo de Producto"
-                    onChange={(e) => setProductType(e.target.value)}
+                    value={selectedArticulo?.id || ''}
+                    label="Seleccionar Artículo"
+                    onChange={(e) => {
+                      const articulo = articulos.find(a => a.id === e.target.value);
+                      setSelectedArticulo(articulo || null);
+                    }}
                   >
-                    <MenuItem value="productA">Producto A</MenuItem>
-                    <MenuItem value="productB">Producto B</MenuItem>
-                    <MenuItem value="productC">Producto C</MenuItem>
+                    {articulos.map((articulo) => (
+                      <MenuItem key={articulo.id} value={articulo.id}>
+                        {articulo.codigo} - {articulo.descripcion} (${articulo.precio})
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
 
-                <TextField
-                  fullWidth
-                  type="number"
-                  label="Cantidad"
-                  value={quantity}
-                  onChange={(e) => setQuantity(Number(e.target.value))}
-                  sx={{ mb: 2 }}
-                />
+                {selectedArticulo && (
+                  <>
+                    <TextField
+                      fullWidth
+                      type="number"
+                      label="Cantidad"
+                      value={cantidad}
+                      onChange={(e) => setCantidad(Number(e.target.value))}
+                      sx={{ mb: 2 }}
+                    />
 
-                <Typography sx={{ mb: 2 }}>
-                  <strong>Precio Unitario:</strong> ${unitPrices[productType] || 0}
-                </Typography>
+                    <Typography sx={{ mb: 2 }}>
+                      <strong>Precio Unitario:</strong> ${selectedArticulo.precio}
+                    </Typography>
 
-                <Typography sx={{ mb: 2 }}>
-                  <strong>Precio Total:</strong> ${calculateTotalPrice()}
-                </Typography>
+                    <Typography sx={{ mb: 2 }}>
+                      <strong>Subtotal:</strong> ${selectedArticulo.precio * cantidad}
+                    </Typography>
 
-                <Button
-                  variant="contained"
-                  onClick={handleAddProduct}
-                  startIcon={<Package />}
-                  fullWidth
-                  sx={{ mb: 2 }}
-                >
-                  Agregar Producto
-                </Button>
+                    <Button
+                      variant="contained"
+                      onClick={handleAddDetail}
+                      startIcon={<Package />}
+                      fullWidth
+                      sx={{ mb: 2 }}
+                    >
+                      Agregar Artículo
+                    </Button>
+                  </>
+                )}
 
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleGenerateOrder}
-                  startIcon={<DollarSign />}
-                  fullWidth
-                >
-                  Generar Orden de Compra
-                </Button>
+                {orderDetails.length > 0 && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleGenerateOrder}
+                    startIcon={<DollarSign />}
+                    fullWidth
+                  >
+                    Generar Orden de Compra
+                  </Button>
+                )}
               </Box>
             )}
           </Paper>
         </Grid>
 
         <Grid item xs={12} md={5}>
-          {selectedProvider && products.length > 0 && (
+          {selectedProveedor && orderDetails.length > 0 && (
             <Paper elevation={3} sx={{ p: 3, position: 'sticky', top: 20 }}>
               <Typography variant="h5" gutterBottom>Resumen de la Orden</Typography>
-              <Typography><strong>Proveedor:</strong> {selectedProvider.name}</Typography>
-              <Typography><strong>Dirección:</strong> {selectedProvider.address}</Typography>
+              <Typography><strong>Proveedor:</strong> {selectedProveedor.razonSocial || `${selectedProveedor.apellido}, ${selectedProveedor.nombre}`}</Typography>
+              <Typography><strong>CUIT:</strong> {selectedProveedor.cuit}</Typography>
               <Typography><strong>Fecha:</strong> {new Date().toLocaleDateString()}</Typography>
               
               <Divider sx={{ my: 2 }} />
               
               <List>
-                {products.map((product, index) => (
+                {orderDetails.map((detail, index) => (
                   <ListItem key={index} sx={{ display: 'block' }}>
                     <Typography>
-                      {product.type} - {product.quantity} x ${product.unitPrice} = ${product.totalPrice}
+                      {detail.articulo.codigo} - {detail.articulo.descripcion}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {detail.cantidad} x ${detail.precio} = ${detail.subtotal}
                     </Typography>
                   </ListItem>
                 ))}
@@ -208,7 +249,7 @@ const OrderForm = () => {
               <Divider sx={{ my: 2 }} />
               
               <Typography variant="h6">
-                <strong>Total:</strong> ${products.reduce((sum, product) => sum + product.totalPrice, 0)}
+                <strong>Total:</strong> ${orderDetails.reduce((sum, detail) => sum + detail.subtotal, 0)}
               </Typography>
             </Paper>
           )}

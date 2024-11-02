@@ -16,10 +16,9 @@ import { ClienteService } from '../../../services/ClienteService';
 
 interface ClienteDetailProps {
   clienteId: string;
-  onUpdateSuccess?: () => void;
 }
 
-const ClienteDetail: React.FC<ClienteDetailProps> = ({ clienteId, onUpdateSuccess }) => {
+const ClienteDetail: React.FC<ClienteDetailProps> = ({ clienteId }) => {
   const [cliente, setCliente] = useState<ClienteData | undefined>();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -72,7 +71,6 @@ const ClienteDetail: React.FC<ClienteDetailProps> = ({ clienteId, onUpdateSucces
         setCliente(response);
         setSuccessMessage('Cliente actualizado correctamente');
         setIsEditing(false);
-        onUpdateSuccess?.();
         await loadCliente();
       } else {
         setError('No se pudo actualizar el cliente');

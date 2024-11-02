@@ -40,7 +40,7 @@ const PanelControl: React.FC = () => {
   const renderComponent = () => {
     switch (selectedOption) {
       case 'datos':
-        return <ClienteDetail clienteId={clienteId ?? '0'} onUpdateSuccess={() => {console.log('Cliente actualizado'); }} />;
+        return <ClienteDetail clienteId={clienteId ?? '0'} />;
       case 'pedidos':
         return <Pedidos />;
       case 'ordenes':
@@ -57,10 +57,10 @@ const PanelControl: React.FC = () => {
   const menuItems: MenuItem[] = [
     { 
       id: 'datos', 
-      title: 'Datos', 
+      title: 'Mis datos', 
       icon: <LayoutDashboard className="w-5 h-5" />, 
       roles: ['Admin', 'Cliente'], 
-      component: <ClienteDetail clienteId={clienteId ?? '0'} onUpdateSuccess={() => {console.log('Cliente actualizado'); }} /> 
+      component: <ClienteDetail clienteId={clienteId ?? '0'} /> 
     },
     { 
       id: 'pedidos', 
@@ -71,21 +71,21 @@ const PanelControl: React.FC = () => {
     },
     { 
       id: 'ordenes', 
-      title: 'Ordenes', 
+      title: 'Crear orden de compra', 
       icon: <ShoppingCart className="w-5 h-5" />, 
       roles: ['Admin'], 
       component: <OrderForm /> 
     },
     { 
       id: 'turnosList', 
-      title: 'Turnos', 
+      title: 'Ver turnos', 
       icon: <Calendar className="w-5 h-5" />, 
       roles: ['Admin'], 
       component: <TurnosList />
     },
     { 
       id: 'turnos', 
-      title: 'Turnos', 
+      title: 'Ver turnos', 
       icon: <Calendar className="w-5 h-5" />, 
       roles: ['Cliente'], 
       component: <Turnos /> 

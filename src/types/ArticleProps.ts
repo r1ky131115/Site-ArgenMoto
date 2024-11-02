@@ -17,3 +17,14 @@ export interface Articulo {
   marca: string;
   modelo: string;
 }
+
+export interface Articulo {
+  id: number;
+  codigo: string;
+  descripcion: string;
+  precio: number;
+  marca: string;
+  modelo: string;
+  stockActual?: number;
+  idProveedor?: number;
+}
