@@ -11,7 +11,8 @@ import {
   Button, 
   Typography, 
   Box, 
-  Chip
+  Chip,
+  CircularProgress
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -25,7 +26,14 @@ import utility from '../../../utils/format';
 const TurnosList: React.FC = () => {
   const { turnos, loading, error, deleteTurnoForAdmin, updateTurnoEstado } = useTurnos();
 
-  if (loading) return <Typography>Cargando turnos...</Typography>;
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
+  
   if (error) return <Typography color="error">{error}</Typography>;
 
   return (

@@ -24,5 +24,6 @@ export interface CreateUserDTO {
 
   export interface User {
     id: string;
+    cliente_Id: string;
     rol: string;
   }

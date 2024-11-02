@@ -38,13 +38,8 @@ export const useTurnos = () => {
 
   const updateTurnoEstado = async (id: number, nuevoEstado: TurnoEstado) => {
     try {
-      const updatedTurno = await TurnoService.updateTurnoEstado(id, nuevoEstado);
-      if(updatedTurno)
-      {
-          setTurnos(turnos.map(turno => 
-            turno.id === id ? updatedTurno : turno
-          ));
-      }
+      const updatedTurno = await TurnoService.updateTurnoEstado(id);
+      setTurnos(updatedTurno);
     } catch (err) {
       setError('Error al actualizar el estado del turno');
     }

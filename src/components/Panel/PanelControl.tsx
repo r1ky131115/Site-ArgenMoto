@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, LayoutDashboard, ShoppingCart, Calendar, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { Datos } from './Datos';
+import ClienteDetail from './Data/ClienteDetail';
 import { Pedidos } from './Pedidos';
 import './PanelControl.css';
 import { Turnos } from './Turnos/TurnosCliente';
@@ -23,7 +23,7 @@ const PanelControl: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState('datos');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user, clienteId, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ const PanelControl: React.FC = () => {
   const renderComponent = () => {
     switch (selectedOption) {
       case 'datos':
-        return <Datos />;
+        return <ClienteDetail clienteId={clienteId ?? '0'} />;
       case 'pedidos':
         return <Pedidos />;
       case 'turnosList':
@@ -57,7 +57,7 @@ const PanelControl: React.FC = () => {
       title: 'Datos', 
       icon: <LayoutDashboard className="w-5 h-5" />, 
       roles: ['Admin', 'Cliente'], 
-      component: <Datos /> 
+      component: <ClienteDetail clienteId={clienteId ?? '0'} /> 
     },
     { 
       id: 'pedidos', 

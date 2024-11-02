@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../../context/AuthContext';
 import {
   Modal,
   Box,
@@ -57,6 +58,7 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
   const [tecnicos, setTecnicos] = useState<Tecnico[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { clienteId } = useAuth();
 
   // Form state
   const [formData, setFormData] = useState<CreateTurnoDTO | UpdateTurnoDTO>({
@@ -69,6 +71,15 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
     estado: turnoToEdit?.estado ?? 'Pendiente'
   });
 
+  useEffect(() => {
+      // Actualizar el formData con el clienteId
+      setFormData(prev => ({
+        ...prev,
+        idCliente: Number.parseInt(clienteId ?? '0')
+      }));
+    
+  }, [clienteId]);
+  
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -91,7 +102,10 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
     if (open) {
       loadData();
       if (turnoToEdit) {
-        setFormData(turnoToEdit);
+        setFormData(prev => ({
+          ...turnoToEdit,
+          idCliente: prev.idCliente
+        }));
       }
     }
   }, [open, turnoToEdit, fetchArticulos, fetchTecnicos]);
@@ -137,7 +151,9 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
 
     // Validación simple
     let errorMessages = [];
-
+    if (!formData.idCliente) {
+      errorMessages.push("No se pudo obtener el ID del cliente.");
+    }
     if (!formData.idArticulo) {
         errorMessages.push("Debe seleccionar un artículo.");
     }

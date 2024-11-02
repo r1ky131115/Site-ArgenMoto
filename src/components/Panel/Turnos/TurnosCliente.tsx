@@ -29,7 +29,7 @@ export const Turnos: React.FC = () => {
   const [turnos, setTurnos] = useState<Turno[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useAuth();
+  const { clienteId } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTurno, setSelectedTurno] = useState<UpdateTurnoDTO | undefined>();
   const [userName, setUser ] = useState<string>();
@@ -55,12 +55,13 @@ export const Turnos: React.FC = () => {
   };
 
   const handleCreateOrUpdate = async (turnoData: CreateTurnoDTO | UpdateTurnoDTO) => {
-    if ('id' in turnoData) {
+    if ('id' in turnoData && turnoData.id > 0) {
       await TurnoService.updateTurnoData(turnoData.id, turnoData);
     } else {
       await TurnoService.createTurno(turnoData);
     }
-    // Recargar la lista de turnos
+    const fetchedTurnos = await TurnoService.getTurnos(clienteId?.toString() ?? '0');
+    setTurnos(fetchedTurnos);
     setModalOpen(false);
   };
 
@@ -86,24 +87,24 @@ export const Turnos: React.FC = () => {
 
   useEffect(() => {
     const fetchTurnosData = async () => {
-      if (!user?.id) return;
-      try {
-        const fetchedTurnos = await TurnoService.getTurnos(user.id);
-        setTurnos(fetchedTurnos);
-        if (fetchedTurnos.length > 0) {
-          setUser(fetchedTurnos[0].cliente.nombre + ' ' + fetchedTurnos[0].cliente.apellido);
-        } else {
-          const usuarioString = localStorage.getItem('usuario');
-          if (usuarioString) {
-              const usuario = JSON.parse(usuarioString);
-              const fullName = usuario.fullName;
-              setUser(fullName);
+      if (!clienteId) return;
+        try {
+          const fetchedTurnos = await TurnoService.getTurnos(clienteId?.toString());
+          setTurnos(fetchedTurnos);
+          if (fetchedTurnos.length > 0) {
+            setUser(fetchedTurnos[0].cliente.nombre + ' ' + fetchedTurnos[0].cliente.apellido);
           } else {
-              setUser('User')
-              console.log('No hay usuario guardado en localStorage');
+            const usuarioString = localStorage.getItem('usuario');
+            if (usuarioString) {
+                const usuario = JSON.parse(usuarioString);
+                const fullName = usuario.fullName;
+                setUser(fullName);
+            } else {
+                setUser('User')
+                console.log('No hay usuario guardado en localStorage');
+            }
           }
-        }
-        setError(null);
+          setError(null);
       } catch (err: any) {
         setError(err.message);
         console.error('Error fetching turnos:', err);
@@ -113,7 +114,7 @@ export const Turnos: React.FC = () => {
     };
 
     fetchTurnosData();
-  }, [user?.id]);
+  }, [clienteId]);
 
   const handleDelete = async (clienteId: number, turnoId: number) => {
     try {
@@ -121,11 +122,12 @@ export const Turnos: React.FC = () => {
         cliente_Id: clienteId,
         turno_Id: turnoId
       });
-      setTurnos(turnos);
       // Recargar la lista de turnos o mostrar mensaje de éxito
     } catch (error) {
       // Manejar el error
     }
+    const fetchedTurnos = await TurnoService.getTurnos(clienteId?.toString() ?? '0');
+    setTurnos(fetchedTurnos);
   };
 
   if (loading) {

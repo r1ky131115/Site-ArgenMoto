@@ -3,6 +3,13 @@ import { Turno, CreateTurnoDTO, UpdateTurnoDTO, DeleteTurnoDTO } from '../types/
 
 const API_BASE_URL = 'https://localhost:7183/api/Clientes';
 
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
 const handleApiError = (error: any): never => {
   if (error.response) {
     throw new Error(error.response.data.mensaje || 'Error en la operación del turno');
@@ -16,16 +23,17 @@ const handleApiError = (error: any): never => {
 const TurnoService = {
   createTurno: async (turnoData: CreateTurnoDTO): Promise<Turno | undefined> => {
     try {
-      const response = await axios.post<Turno>(`${API_BASE_URL}/create-turno`, turnoData);
+      const response = await api.post<Turno>(`${API_BASE_URL}/create-turno`, turnoData);
       return response.data;
     } catch (error) {
       handleApiError(error);
+      throw error;
     }
   },
 
   getTurnos: async (userId: string): Promise<Turno[]> => {
     try {
-      const response = await axios.get<Turno[]>(`${API_BASE_URL}/turno/${userId}`);
+      const response = await api.get<Turno[]>(`${API_BASE_URL}/turno/${userId}`);
       return response.data;
     } catch (error) {
       handleApiError(error);
@@ -34,45 +42,49 @@ const TurnoService = {
   },
 
   getAllTurnos: async (): Promise<Turno[]> => {
-      try {
-      const response = await axios.get<Turno[]>(`${API_BASE_URL}/turnos`);
+    try {
+      const response = await api.get<Turno[]>(`${API_BASE_URL}/turnos`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching turnos:', error);
+      handleApiError(error);
       throw error;
     }
   },
 
   updateTurnoData: async (turnoId: number, turnoData: UpdateTurnoDTO): Promise<void> => {
     try {
-      await axios.put(`${API_BASE_URL}/update-turno/${turnoId}`, turnoData);
+      await api.put(`${API_BASE_URL}/update-turno/${turnoId}`, turnoData);
     } catch (error) {
       handleApiError(error);
+      throw error;
     }
   },
 
-  updateTurnoEstado: async (id: number, estado: string): Promise<Turno | undefined> => {
+  updateTurnoEstado: async (turnoId: number): Promise<Turno []> => {
     try {
-      const response = await axios.patch<Turno>(`${API_BASE_URL}/update-turno-estado/${id}`, { estado });
+      const response = await api.put<Turno[]>(`${API_BASE_URL}/update-turno-estado/${turnoId}`);
       return response.data;
     } catch (error) {
       handleApiError(error);
+      throw error;
     }
   },
 
   deleteTurno: async (deleteData: DeleteTurnoDTO): Promise<void> => {
     try {
-      await axios.delete(`${API_BASE_URL}/remove-turno`, { data: deleteData });
+      await api.delete(`${API_BASE_URL}/remove-turno`, { data: deleteData });
     } catch (error) {
       handleApiError(error);
+      throw error;
     }
   },
 
   deleteTurnoForAdmin: async (id: number): Promise<void> => {
     try {
-      await axios.delete(`${API_BASE_URL}/remove-turno-for-admin/${id}`);
+      await api.delete(`${API_BASE_URL}/remove-turno-for-admin/${id}`);
     } catch (error) {
       handleApiError(error);
+      throw error;
     }
   }
 };
