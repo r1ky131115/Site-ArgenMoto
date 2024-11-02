@@ -7,6 +7,7 @@ export const useTurnos = () => {
   const [turnos, setTurnos] = useState<Turno[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string>('');
 
   const fetchTurnos = async () => {
     try {
@@ -23,6 +24,7 @@ export const useTurnos = () => {
     try {
       await TurnoService.deleteTurnoForAdmin(id);
       setTurnos(turnos.filter(turno => turno.id !== id));
+      setSuccessMessage('Se elimino correctamente')
     } catch (err) {
       setError('Error al eliminar el turno');
     }
@@ -40,6 +42,7 @@ export const useTurnos = () => {
     try {
       const updatedTurno = await TurnoService.updateTurnoEstado(id);
       setTurnos(updatedTurno);
+      setSuccessMessage('Se actualizo correctamente')
     } catch (err) {
       setError('Error al actualizar el estado del turno');
     }
@@ -53,6 +56,7 @@ export const useTurnos = () => {
     turnos,
     loading,
     error,
+    successMessage,
     deleteTurnoForAdmin,
     updateTurnoEstado,
     refetchTurnos: fetchTurnos

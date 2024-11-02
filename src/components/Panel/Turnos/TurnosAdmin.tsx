@@ -1,5 +1,5 @@
 // components/TurnosList.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Table, 
   TableBody, 
@@ -12,7 +12,9 @@ import {
   Typography, 
   Box, 
   Chip,
-  CircularProgress
+  CircularProgress,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -24,7 +26,11 @@ import utility from '../../../utils/format';
 
 
 const TurnosList: React.FC = () => {
-  const { turnos, loading, error, deleteTurnoForAdmin, updateTurnoEstado } = useTurnos();
+  const { turnos, loading, error, successMessage, deleteTurnoForAdmin, updateTurnoEstado } = useTurnos();
+
+  
+  const [errorMsj, setError] = useState<string>('');
+  const [successMsj, setSuccessMessage] = useState<string>('');
 
   if (loading) {
     return (
@@ -33,7 +39,7 @@ const TurnosList: React.FC = () => {
       </Box>
     );
   }
-  
+
   if (error) return <Typography color="error">{error}</Typography>;
 
   return (
@@ -106,6 +112,25 @@ const TurnosList: React.FC = () => {
           No hay turnos disponibles
         </Typography>
       )}
+
+      <Snackbar
+        open={!!error}
+        autoHideDuration={2000}
+      >
+        <Alert severity="error" onClose={() => setError(errorMsj)}>
+          {error}
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={!!successMessage}
+        autoHideDuration={2000}
+      >
+        <Alert severity="success" onClose={() => setSuccessMessage(successMsj)}>
+          {successMessage}
+        </Alert>
+      </Snackbar>
+
     </Box>
   );
 };

@@ -11,20 +11,8 @@ import {
   Snackbar,
   CircularProgress
 } from '@mui/material';
-import axios from 'axios';
-
-interface Cliente {
-  idCliente: number;
-  tipoDocumento: string;
-  numeroDocumento: string;
-  apellido: string;
-  nombre: string;
-  domicilio: string;
-  localidad: string;
-  provincia: string;
-  telefono: string;
-  email: string;
-}
+import { ClienteData } from '../../../types/Cliente';
+import { ClienteService } from '../../../services/ClienteService';
 
 interface ClienteDetailProps {
   clienteId: string;
@@ -32,22 +20,31 @@ interface ClienteDetailProps {
 }
 
 const ClienteDetail: React.FC<ClienteDetailProps> = ({ clienteId, onUpdateSuccess }) => {
-  const [cliente, setCliente] = useState<Cliente | null>(null);
+  const [cliente, setCliente] = useState<ClienteData | undefined>();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string>('');
 
   useEffect(() => {
-    loadCliente();
-  });
+    if (clienteId && clienteId !== '0') {
+      loadCliente();
+    } else {
+      setLoading(false);
+      setError('ID de cliente no válido');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clienteId]);
 
   const loadCliente = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`/api/clientes/${clienteId}`);
-      setCliente(response.data);
-      setError('');
+      const response = await ClienteService.getCliente(clienteId);
+      if (response) {
+        setCliente(response);
+      } else {
+        setError('No se encontró el cliente');
+      }
     } catch (err) {
       setError('Error al cargar los datos del cliente');
       console.error('Error loading cliente:', err);
@@ -69,19 +66,28 @@ const ClienteDetail: React.FC<ClienteDetailProps> = ({ clienteId, onUpdateSucces
     if (!cliente) return;
 
     try {
-      await axios.put(`/api/clientes/${clienteId}`, cliente);
-      setSuccessMessage('Cliente actualizado correctamente');
-      setIsEditing(false);
-      onUpdateSuccess?.();
-    } catch (err) {
+      setLoading(true);
+      const response = await ClienteService.updateCliente(clienteId, cliente);
+      if (response) {
+        setCliente(response);
+        setSuccessMessage('Cliente actualizado correctamente');
+        setIsEditing(false);
+        onUpdateSuccess?.();
+        await loadCliente();
+      } else {
+        setError('No se pudo actualizar el cliente');
+      }      
+    }catch (err) {
       setError('Error al actualizar el cliente');
       console.error('Error updating cliente:', err);
+    }finally {
+      setLoading(false);
     }
   };
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <CircularProgress />
       </Box>
     );
@@ -202,20 +208,18 @@ const ClienteDetail: React.FC<ClienteDetailProps> = ({ clienteId, onUpdateSucces
 
       <Snackbar
         open={!!error}
-        autoHideDuration={6000}
-        onClose={() => setError('')}
+        autoHideDuration={1000}
       >
-        <Alert severity="error" onClose={() => setError('')}>
+        <Alert severity="error">
           {error}
         </Alert>
       </Snackbar>
 
       <Snackbar
         open={!!successMessage}
-        autoHideDuration={6000}
-        onClose={() => setSuccessMessage('')}
+        autoHideDuration={1000}
       >
-        <Alert severity="success" onClose={() => setSuccessMessage('')}>
+        <Alert severity="success">
           {successMessage}
         </Alert>
       </Snackbar>

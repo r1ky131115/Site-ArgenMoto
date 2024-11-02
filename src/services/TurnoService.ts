@@ -23,7 +23,8 @@ const handleApiError = (error: any): never => {
 const TurnoService = {
   createTurno: async (turnoData: CreateTurnoDTO): Promise<Turno | undefined> => {
     try {
-      const response = await api.post<Turno>(`${API_BASE_URL}/create-turno`, turnoData);
+      debugger
+      const response = await api.post<Turno>(`/create-turno`, turnoData);
       return response.data;
     } catch (error) {
       handleApiError(error);
@@ -33,7 +34,7 @@ const TurnoService = {
 
   getTurnos: async (userId: string): Promise<Turno[]> => {
     try {
-      const response = await api.get<Turno[]>(`${API_BASE_URL}/turno/${userId}`);
+      const response = await api.get<Turno[]>(`/turno/${userId}`);
       return response.data;
     } catch (error) {
       handleApiError(error);
@@ -43,7 +44,7 @@ const TurnoService = {
 
   getAllTurnos: async (): Promise<Turno[]> => {
     try {
-      const response = await api.get<Turno[]>(`${API_BASE_URL}/turnos`);
+      const response = await api.get<Turno[]>(`/turnos`);
       return response.data;
     } catch (error) {
       handleApiError(error);
@@ -53,7 +54,7 @@ const TurnoService = {
 
   updateTurnoData: async (turnoId: number, turnoData: UpdateTurnoDTO): Promise<void> => {
     try {
-      await api.put(`${API_BASE_URL}/update-turno/${turnoId}`, turnoData);
+      await api.put(`/update-turno/${turnoId}`, turnoData);
     } catch (error) {
       handleApiError(error);
       throw error;
@@ -62,7 +63,7 @@ const TurnoService = {
 
   updateTurnoEstado: async (turnoId: number): Promise<Turno []> => {
     try {
-      const response = await api.put<Turno[]>(`${API_BASE_URL}/update-turno-estado/${turnoId}`);
+      const response = await api.put<Turno[]>(`/update-turno-estado/${turnoId}`);
       return response.data;
     } catch (error) {
       handleApiError(error);
@@ -72,7 +73,7 @@ const TurnoService = {
 
   deleteTurno: async (deleteData: DeleteTurnoDTO): Promise<void> => {
     try {
-      await api.delete(`${API_BASE_URL}/remove-turno`, { data: deleteData });
+      await api.delete(`/remove-turno`, { data: deleteData });
     } catch (error) {
       handleApiError(error);
       throw error;
@@ -81,7 +82,7 @@ const TurnoService = {
 
   deleteTurnoForAdmin: async (id: number): Promise<void> => {
     try {
-      await api.delete(`${API_BASE_URL}/remove-turno-for-admin/${id}`);
+      await api.delete(`/remove-turno-for-admin/${id}`);
     } catch (error) {
       handleApiError(error);
       throw error;

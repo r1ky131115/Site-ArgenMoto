@@ -7,6 +7,7 @@ import { Pedidos } from './Pedidos';
 import './PanelControl.css';
 import { Turnos } from './Turnos/TurnosCliente';
 import TurnosList from './Turnos/TurnosAdmin';
+import OrderForm from '../OrderForm/OrderForm';
 
 // Tipos de usuarios permitidos
 type UserRole = 'Admin' | 'Cliente';
@@ -39,9 +40,11 @@ const PanelControl: React.FC = () => {
   const renderComponent = () => {
     switch (selectedOption) {
       case 'datos':
-        return <ClienteDetail clienteId={clienteId ?? '0'} />;
+        return <ClienteDetail clienteId={clienteId ?? '0'} onUpdateSuccess={() => {console.log('Cliente actualizado'); }} />;
       case 'pedidos':
         return <Pedidos />;
+      case 'ordenes':
+          return <OrderForm />;  
       case 'turnosList':
         return <TurnosList />;
       case 'turnos':
@@ -57,14 +60,21 @@ const PanelControl: React.FC = () => {
       title: 'Datos', 
       icon: <LayoutDashboard className="w-5 h-5" />, 
       roles: ['Admin', 'Cliente'], 
-      component: <ClienteDetail clienteId={clienteId ?? '0'} /> 
+      component: <ClienteDetail clienteId={clienteId ?? '0'} onUpdateSuccess={() => {console.log('Cliente actualizado'); }} /> 
     },
     { 
       id: 'pedidos', 
       title: 'Pedidos', 
       icon: <ShoppingCart className="w-5 h-5" />, 
-      roles: ['Admin', 'Cliente'], 
+      roles: ['Cliente'], 
       component: <Pedidos /> 
+    },
+    { 
+      id: 'ordenes', 
+      title: 'Ordenes', 
+      icon: <ShoppingCart className="w-5 h-5" />, 
+      roles: ['Admin'], 
+      component: <OrderForm /> 
     },
     { 
       id: 'turnosList', 
