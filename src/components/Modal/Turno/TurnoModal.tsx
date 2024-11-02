@@ -28,7 +28,7 @@ interface TurnoModalProps {
   turnoToEdit?: UpdateTurnoDTO;
   dataTurno: string;
   // Servicios para cargar las listas
-  fetchArticulos: () => Promise<Articulo[]>;
+  fetchArticles: () => Promise<Articulo[]>;
   fetchTecnicos: () => Promise<Tecnico[]>;
 }
 
@@ -51,10 +51,10 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
   onSubmit,
   turnoToEdit,
   dataTurno,
-  fetchArticulos,
+  fetchArticles,
   fetchTecnicos
 }) => {
-  const [articulos, setArticulos] = useState<Articulo[]>([]);
+  const [Articles, setArticles] = useState<Articulo[]>([]);
   const [tecnicos, setTecnicos] = useState<Tecnico[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -85,11 +85,11 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
       setLoading(true);
       setError(null);
       try {
-        const [articulosData, tecnicosData] = await Promise.all([
-          fetchArticulos(),
+        const [ArticlesData, tecnicosData] = await Promise.all([
+          fetchArticles(),
           fetchTecnicos()
         ]);
-        setArticulos(articulosData);
+        setArticles(ArticlesData);
         setTecnicos(tecnicosData);
       } catch (err) {
         setError('Error al cargar los datos');
@@ -108,7 +108,7 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
         }));
       }
     }
-  }, [open, turnoToEdit, fetchArticulos, fetchTecnicos]);
+  }, [open, turnoToEdit, fetchArticles, fetchTecnicos]);
 
   // const handleInputChange = (
   //   event: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>
@@ -234,7 +234,7 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
                   label="Artículo"
                   required
                 >
-                  {articulos.map(articulo => (
+                  {Articles.map(articulo => (
                     <MenuItem key={articulo.id} value={articulo.id}>
                       {articulo.descripcion}
                     </MenuItem>

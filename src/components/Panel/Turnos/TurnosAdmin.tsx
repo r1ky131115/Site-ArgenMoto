@@ -21,7 +21,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 
 import { useTurnos } from '../../../hooks/useTurnos';
-import { Turno, TurnoEstado } from '../../../types/Turno';
+import { Turno } from '../../../types/Turno';
 import utility from '../../../utils/format';
 
 
@@ -40,7 +40,13 @@ const TurnosList: React.FC = () => {
     );
   }
 
-  if (error) return <Typography color="error">{error}</Typography>;
+  if (error) {
+    return (
+      <Alert severity="error">
+          <Typography>{error}</Typography>
+      </Alert>
+    );
+  }
 
   return (
     <Box sx={{ width: '100%', overflowX: 'auto' }}>
@@ -57,7 +63,14 @@ const TurnosList: React.FC = () => {
               <TableCell sx={{ fontWeight: 'bold', bgcolor: 'primary.main', color: 'white'}}>Acciones</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          {!turnos.length ? (
+            <Box textAlign="center" py={4}>
+              <Typography color="text.secondary">
+                No hay turnos programados.
+              </Typography>
+            </Box>
+          ) : (
+          <TableBody>  
             {turnos.map((turno: Turno) => (
               <TableRow key={turno.id}>
                 <TableCell>
@@ -83,8 +96,7 @@ const TurnosList: React.FC = () => {
                       color={turno.estado === 'Pendiente' ? 'success' : 'warning'}
                       startIcon={turno.estado === 'Pendiente' ? <CheckCircleIcon /> : <PendingIcon />}
                       onClick={() => {
-                        const nuevoEstado: TurnoEstado = turno.estado === 'Pendiente' ? 'Finalizado' : 'Pendiente'; // Cambia el estado
-                        updateTurnoEstado(turno.id, nuevoEstado);
+                        updateTurnoEstado(turno.id);
                       }}
                       size="small"
                     >
@@ -104,6 +116,7 @@ const TurnosList: React.FC = () => {
               </TableRow>
             ))}
           </TableBody>
+          )}
         </Table>
       </TableContainer>
 

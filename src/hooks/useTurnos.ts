@@ -1,7 +1,7 @@
 // hooks/useTurnos.ts
 import { useState, useEffect } from 'react';
 import TurnoService from '../services/TurnoService';
-import { Turno, TurnoEstado } from '../types/Turno';
+import { Turno } from '../types/Turno';
 
 export const useTurnos = () => {
   const [turnos, setTurnos] = useState<Turno[]>([]);
@@ -11,6 +11,7 @@ export const useTurnos = () => {
 
   const fetchTurnos = async () => {
     try {
+      debugger
       const fetchedTurnos = await TurnoService.getAllTurnos();
       setTurnos(fetchedTurnos);
       setLoading(false);
@@ -38,7 +39,7 @@ export const useTurnos = () => {
   //   }
   // };
 
-  const updateTurnoEstado = async (id: number, nuevoEstado: TurnoEstado) => {
+  const updateTurnoEstado = async (id: number) => {
     try {
       const updatedTurno = await TurnoService.updateTurnoEstado(id);
       setTurnos(updatedTurno);

@@ -34,7 +34,7 @@ export const Turnos: React.FC = () => {
   const [selectedTurno, setSelectedTurno] = useState<UpdateTurnoDTO | undefined>();
   const [userName, setUser ] = useState<string>();
 
-  const fetchArticulos = async (): Promise<Articulo[]> => {
+  const fetchArticles = async (): Promise<Articulo[]> => {
     try {
       const data = await ArticleService.getBasicArticles();
       return data;
@@ -267,7 +267,7 @@ export const Turnos: React.FC = () => {
         onSubmit={handleCreateOrUpdate}
         turnoToEdit={selectedTurno}
         dataTurno={userName ?? 'User'}
-        fetchArticulos={fetchArticulos}
+        fetchArticles={fetchArticles}
         fetchTecnicos={fetchTecnicos}
       />
     </>

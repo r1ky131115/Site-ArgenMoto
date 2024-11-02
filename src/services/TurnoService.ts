@@ -21,9 +21,8 @@ const handleApiError = (error: any): never => {
 };
 
 const TurnoService = {
-  createTurno: async (turnoData: CreateTurnoDTO): Promise<Turno | undefined> => {
+  createTurno: async (turnoData: CreateTurnoDTO): Promise<Turno> => {
     try {
-      debugger
       const response = await api.post<Turno>(`/create-turno`, turnoData);
       return response.data;
     } catch (error) {
@@ -44,6 +43,7 @@ const TurnoService = {
 
   getAllTurnos: async (): Promise<Turno[]> => {
     try {
+      debugger
       const response = await api.get<Turno[]>(`/turnos`);
       return response.data;
     } catch (error) {

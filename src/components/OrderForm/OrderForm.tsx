@@ -19,10 +19,11 @@ import { Proveedor } from '../../types/Proveedor';
 import { Articulo } from '../../types/ArticleProps';
 import { OrderDetail } from '../../types/OrdenDetail';
 import ProveedorService from '../../services/ProveedorService';
+import ArticleService from '../../services/ArticleService';
 
 const OrderForm = () => {
   const [proveedores, setProveedores] = useState<Proveedor[]>([]);
-  const [articulos, setArticulos] = useState<Articulo[]>([]);
+  const [article, setArticles] = useState<Articulo[]>([]);
   const [selectedProveedor, setSelectedProveedor] = useState<Proveedor | null>(null);
   const [selectedArticulo, setSelectedArticulo] = useState<Articulo | null>(null);
   const [orderDetails, setOrderDetails] = useState<OrderDetail[]>([]);
@@ -45,17 +46,16 @@ const OrderForm = () => {
   // Fetch artículos when provider is selected
   useEffect(() => {
     if (selectedProveedor) {
-      const fetchArticulos = async () => {
+      const fetchArticles = async () => {
         try {
-          const response = await fetch(`/api/articulos/proveedor/${selectedProveedor.id}`);
-          if (!response.ok) throw new Error('Error al cargar artículos');
-          const data = await response.json();
-          setArticulos(data);
+          const response = await ArticleService.GetArticlesPorProveedor(selectedProveedor.id);
+          if (!response) throw new Error('Error al cargar artículos');
+          setArticles(response);
         } catch (error) {
           console.error('Error:', error);
         }
       };
-      fetchArticulos();
+      fetchArticles();
     }
   }, [selectedProveedor]);
 
@@ -164,11 +164,11 @@ const OrderForm = () => {
                     value={selectedArticulo?.id || ''}
                     label="Seleccionar Artículo"
                     onChange={(e) => {
-                      const articulo = articulos.find(a => a.id === e.target.value);
+                      const articulo = article.find(a => a.id === e.target.value);
                       setSelectedArticulo(articulo || null);
                     }}
                   >
-                    {articulos.map((articulo) => (
+                    {article.map((articulo) => (
                       <MenuItem key={articulo.id} value={articulo.id}>
                         {articulo.codigo} - {articulo.descripcion} (${articulo.precio})
                       </MenuItem>

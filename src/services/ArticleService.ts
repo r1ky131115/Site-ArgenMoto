@@ -40,7 +40,7 @@ const ArticleService = {
     }
   },
   
-  GetArticulosPorProveedor: async (id: number): Promise<Articulo[]> => {
+  GetArticlesPorProveedor: async (id: number): Promise<Articulo[]> => {
     try {
       const response = await api.get<Articulo[]>(`/proveedor/${id}`);
       return response.data;
