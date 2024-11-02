@@ -3,7 +3,7 @@ import ArticleCard from '../Card/ArticleCard';
 import { ArticleProps } from '../../types/ArticleProps';
 import Pagination from '../Pagination';
 import useAnimateOnScroll from '../../hooks/useAnimateOnScroll';
-import { getArticles } from '../../services/ArticleAPI';
+import ArticleService from '../../services/ArticleService';
 import '../../styles/animation.css';
 
 interface VehicleGridProps {
@@ -29,7 +29,7 @@ const VehicleGrid: React.FC<VehicleGridProps> = ({
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const articles = await getArticles();
+        const articles = await ArticleService.getArticles();
         setVehicles(articles);
       } catch (error) {
         console.error(error);

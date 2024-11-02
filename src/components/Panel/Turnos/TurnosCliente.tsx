@@ -22,7 +22,7 @@ import { CreateTurnoDTO, UpdateTurnoDTO } from '../../../types/Turno';
 import { getTecnicos } from '../../../services/TecnicoService';
 import { Tecnico } from '../../../types/Tecnico';
 import { Articulo } from '../../../types/ArticleProps';
-import { getBasicArticles } from '../../../services/ArticleAPI';
+import ArticleService from '../../../services/ArticleService';
 import utility from '../../../utils/format';
 
 export const Turnos: React.FC = () => {
@@ -36,7 +36,7 @@ export const Turnos: React.FC = () => {
 
   const fetchArticulos = async (): Promise<Articulo[]> => {
     try {
-      const data = await getBasicArticles();
+      const data = await ArticleService.getBasicArticles();
       return data;
     } catch (err: any) {
       setError(err.message);

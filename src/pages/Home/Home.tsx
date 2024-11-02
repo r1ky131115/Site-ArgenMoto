@@ -7,7 +7,7 @@ import '../../index.css';
 import ServicesSection from '../../components/Sections/ServicesSection';
 import CounterSection from '../../components/Sections/CounterSection';
 import { ArticleProps } from '../../types/ArticleProps';
-import { getArticles } from '../../services/ArticleAPI';
+import ArticleService from '../../services/ArticleService';
 
 const Home: React.FC = () => {
   const [vehicles, setVehicles] = useState<ArticleProps[]>([]);
@@ -24,7 +24,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const articles = await getArticles();
+        const articles = await ArticleService.getArticles();
         setVehicles(articles);
       } catch (error) {
         console.error(error);
