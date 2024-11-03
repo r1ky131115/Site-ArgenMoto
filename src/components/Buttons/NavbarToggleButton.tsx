@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuBook } from '@mui/icons-material';
+import { Menu } from 'lucide-react';
 
 interface NavbarToggleButtonProps {
   onClick: () => void;
@@ -15,7 +15,7 @@ const NavbarToggleButton: React.FC<NavbarToggleButtonProps> = ({ onClick, isColl
       aria-expanded={!isCollapsed}
       aria-label="Toggle navigation"
     >
-      <span className="oi oi-menu"><MenuBook style={{ fontSize: 24 }}/></span> Menu
+      <span className="oi oi-menu"><Menu size={ 24 }/></span> Menu
     </button>
   );
 };

@@ -33,7 +33,6 @@ export const ClienteService = {
 
   updateCliente: async (id: string, cliente: ClienteData): Promise<ClienteData | undefined> => {
     try {
-      debugger
       const response = await api.patch<ClienteData>(`/${id}`, cliente );
       return response.data;
     } catch (error) {

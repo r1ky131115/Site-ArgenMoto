@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import NavbarToggleButton from '../Buttons/NavbarToggleButton';
-import { SupervisedUserCircleSharp } from '@mui/icons-material';
+import { UserCog } from 'lucide-react';
 import './Navbar.css'
 
 const Navbar: React.FC = () => {
@@ -92,7 +92,7 @@ const Navbar: React.FC = () => {
                 onClick={handleNavLinkClick}
               >
                 Perfil&nbsp;
-                <SupervisedUserCircleSharp className='mb-2' />
+                <UserCog className='mb-2' />
               </NavLink>
             </li>
           </ul>

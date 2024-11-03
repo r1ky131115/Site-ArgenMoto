@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facebook, Twitter, Instagram } from '@mui/icons-material';
+import { Facebook, Twitter, Instagram } from 'lucide-react';
 
 interface SocialLink {
   icon: JSX.Element;
@@ -25,25 +25,24 @@ const Footer: React.FC = () => {
   ];
 
   const informationLinks: InfoLink[] = [
-    { text: "About", url: "#" },
-    { text: "Services", url: "#" },
-    { text: "Term and Conditions", url: "#" },
-    { text: "Best Price Guarantee", url: "#" },
-    { text: "Privacy & Cookies Policy", url: "#" }
+    { text: "Inicio", url: "#" },
+    { text: "Servicios", url: "#" },
+    { text: "Terminos y condiciones", url: "#" },
+    { text: "Privadicad & Politicas de cookies", url: "#" }
   ];
 
   const customerSupportLinks: InfoLink[] = [
-    { text: "FAQ", url: "#" },
-    { text: "Payment Option", url: "#" },
-    { text: "Booking Tips", url: "#" },
-    { text: "How it works", url: "#" },
-    { text: "Contact Us", url: "#" }
+    { text: "Preguntas frecuentes", url: "#" },
+    { text: "Opciones de pago", url: "#" },
+    { text: "Consejos para comprar", url: "#" },
+    { text: "Trabaja con nosotros", url: "#" },
+    { text: "Contáctanos", url: "#" }
   ];
 
   const contactInfo: ContactInfo = {
-    address: "203 Fake St. Mountain View, San Francisco, California, USA",
-    phone: "+2 392 3929 210",
-    email: "info@yourdomain.com"
+    address: "Av. Calchaquí 6200 (1888) Florencio Varela Buenos Aires, Argentina",
+    phone: "+54 11 4275-6100",
+    email: "www.unaj.edu.ar"
   };
 
   const currentYear = new Date().getFullYear();
@@ -57,10 +56,9 @@ const Footer: React.FC = () => {
             <div className="ftco-footer-widget mb-4">
               <h2 className="ftco-heading-2">
                 <a href="/" className="logo">
-                  Car<span>book</span>
+                  Argen<span>Moto</span>
                 </a>
               </h2>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
               <ul className="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                 {socialLinks.map((link, index) => (
                   <li key={index} className="ftco-animate">
@@ -76,7 +74,7 @@ const Footer: React.FC = () => {
           {/* Information Column */}
           <div className="col-md">
             <div className="ftco-footer-widget mb-4 ml-md-5">
-              <h2 className="ftco-heading-2">Information</h2>
+              <h2 className="ftco-heading-2">Información</h2>
               <ul className="list-unstyled">
                 {informationLinks.map((link, index) => (
                   <li key={index}>
@@ -92,7 +90,7 @@ const Footer: React.FC = () => {
           {/* Customer Support Column */}
           <div className="col-md">
             <div className="ftco-footer-widget mb-4">
-              <h2 className="ftco-heading-2">Customer Support</h2>
+              <h2 className="ftco-heading-2">Atención al cliente</h2>
               <ul className="list-unstyled">
                 {customerSupportLinks.map((link, index) => (
                   <li key={index}>
@@ -108,7 +106,7 @@ const Footer: React.FC = () => {
           {/* Contact Info Column */}
           <div className="col-md">
             <div className="ftco-footer-widget mb-4">
-              <h2 className="ftco-heading-2">Have a Questions?</h2>
+              <h2 className="ftco-heading-2">Tienes preguntas?</h2>
               <div className="block-23 mb-3">
                 <ul>
                   <li>

@@ -1,6 +1,6 @@
 import React from 'react';
 import TripForm from './TripForm';
-import { SupervisorAccount, Map, DirectionsCar } from '@mui/icons-material';
+import { Map, CalendarCheck, Bike } from 'lucide-react';
 import useAnimateOnScroll from '../../hooks/useAnimateOnScroll';
 import '../../styles/animation.css'
 
@@ -23,16 +23,16 @@ const BookingSection: React.FC = () => {
                 data-animate-effect="fadeInRight"
               >
                 <div className="services-wrap rounded-right w-100">
-                  <h3 className="heading-section mb-4">Better Way to Rent Your Perfect Cars</h3>
+                  <h3 className="heading-section mb-4">La mejor manera de comprar tu moto perfecta</h3>
                   <div className="row d-flex mb-4">
                     
                     <div ref={servicesRef} className="col-md-4 d-flex align-self-stretch">
                       <div className="services w-100 text-center">
                         <div className="icon d-flex align-items-center justify-content-center">
-                          <Map sx={{ fontSize: 24 }} />
+                          <Map size={ 24 } />
                         </div>
                         <div className="text w-100">
-                          <h3 className="heading mb-2">Choose Your Pickup Location</h3>
+                          <h3 className="heading mb-2">Elige tu lugar para retirarla</h3>
                         </div>
                       </div>
                     </div>
@@ -40,10 +40,10 @@ const BookingSection: React.FC = () => {
                     <div ref={servicesRef} className="col-md-4 d-flex align-self-stretch">
                       <div className="services w-100 text-center">
                         <div className="icon d-flex align-items-center justify-content-center">
-                          <SupervisorAccount sx={{ fontSize: 24 }} />
+                          <Bike size={ 24 } />
                         </div>
                         <div className="text w-100">
-                          <h3 className="heading mb-2">Select the Best Deal</h3>
+                          <h3 className="heading mb-2">Encuentra la moto ideal para ti</h3>
                         </div>
                       </div>
                     </div>
@@ -51,10 +51,10 @@ const BookingSection: React.FC = () => {
                     <div ref={servicesRef} className="col-md-4 d-flex align-self-stretch">
                       <div className="services w-100 text-center">
                         <div className="icon d-flex align-items-center justify-content-center">
-                          <DirectionsCar sx={{ fontSize: 24 }} />
+                          <CalendarCheck size={ 24 } />
                         </div>
                         <div className="text w-100">
-                          <h3 className="heading mb-2">Reserve Your Rental Car</h3>
+                          <h3 className="heading mb-2">Reserva tu moto soñada hoy mismo</h3>
                         </div>
                       </div>
                     </div>

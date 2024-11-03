@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardArrowRight } from '@mui/icons-material';
+import { ChevronRight } from 'lucide-react';
 import useAnimateOnScroll from '../../hooks/useAnimateOnScroll';
 import '../../styles/animation.css'
 
@@ -41,11 +41,11 @@ const PageHeader: React.FC<PageHeaderProps> = ({
                     <span className={index < breadcrumbs.length - 1 ? 'mr-2' : ''}>
                       {crumb.url ? (
                         <a href={crumb.url}>
-                          {crumb.text} <KeyboardArrowRight className='mb-1'/>
+                          {crumb.text} <ChevronRight className='mb-1'/>
                         </a>
                       ) : (
                         <>
-                          {crumb.text} {index < breadcrumbs.length - 1 && <KeyboardArrowRight className='mb-1' />}
+                          {crumb.text} {index < breadcrumbs.length - 1 && <ChevronRight className='mb-1' />}
                         </>
                       )}
                     </span>

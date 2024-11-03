@@ -11,7 +11,6 @@ export const useTurnos = () => {
 
   const fetchTurnos = async () => {
     try {
-      debugger
       const fetchedTurnos = await TurnoService.getAllTurnos();
       setTurnos(fetchedTurnos);
       setLoading(false);

@@ -48,7 +48,6 @@ class OrdenCompraService {
     }
 
     async updateOrdenCompra(data: OrdenCompraUpdateEstado): Promise<void> {
-        debugger
         await this.api.put('/OrdenesCompra/', data);
     }
 
