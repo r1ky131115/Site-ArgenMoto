@@ -54,6 +54,7 @@ const TurnosList: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell sx={{ fontWeight: 'bold', bgcolor: 'primary.main', color: 'white'}}>N° Turno</TableCell>
               <TableCell sx={{ fontWeight: 'bold', bgcolor: 'primary.main', color: 'white'}}>Cliente</TableCell>
               <TableCell sx={{ fontWeight: 'bold', bgcolor: 'primary.main', color: 'white'}}>Artículo</TableCell>
               <TableCell sx={{ fontWeight: 'bold', bgcolor: 'primary.main', color: 'white'}}>Técnico</TableCell>
@@ -73,6 +74,9 @@ const TurnosList: React.FC = () => {
           <TableBody>  
             {turnos.map((turno: Turno) => (
               <TableRow key={turno.id}>
+                <TableCell>
+                  {turno.numeroTurno}
+                </TableCell>
                 <TableCell>
                   {turno.cliente.nombre} {turno.cliente.apellido}
                 </TableCell>

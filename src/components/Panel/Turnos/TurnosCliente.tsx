@@ -73,7 +73,8 @@ export const Turnos: React.FC = () => {
       estado: turnoEdit.estado,
       idCliente: turnoEdit.cliente.id,
       idArticulo: turnoEdit.articulo.id,
-      idTecnico: turnoEdit.tecnico.id
+      idTecnico: turnoEdit.tecnico.id,
+      numeroTurno: turnoEdit.numeroTurno
     };
 
     setSelectedTurno(editTurno);
@@ -178,7 +179,7 @@ export const Turnos: React.FC = () => {
                   title={
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                       <Typography variant="h6">
-                        Turno para {turno.fecha ? utility.formatDate(turno.fecha) : 'Fecha no disponible'} - {utility.formatTime(turno.hora)}
+                        Turno {turno.fecha ? utility.formatDate(turno.fecha) : 'Fecha no disponible'} - {utility.formatTime(turno.hora)}
                       </Typography>
                       <Chip
                         label={turno.estado}

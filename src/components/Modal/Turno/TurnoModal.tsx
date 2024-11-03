@@ -68,7 +68,8 @@ export const TurnoModal: React.FC<TurnoModalProps> = ({
     idTecnico: 0,
     fecha: new Date().toISOString().split('T')[0],
     hora: '09:00',
-    estado: turnoToEdit?.estado ?? 'Pendiente'
+    estado: turnoToEdit?.estado ?? 'Pendiente',
+    numeroTurno: ''
   });
 
   useEffect(() => {

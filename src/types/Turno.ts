@@ -10,6 +10,7 @@ export interface Turno {
     fecha: string;
     hora: string;
     estado: string;
+    numeroTurno: string;
   }
 
 export interface CreateTurnoDTO {
@@ -19,6 +20,7 @@ export interface CreateTurnoDTO {
   fecha: string;
   hora: string;
   estado: string;
+  numeroTurno: string;
 }
 
 export interface UpdateTurnoDTO {
@@ -29,6 +31,7 @@ export interface UpdateTurnoDTO {
   idCliente: number;
   idArticulo: number;
   idTecnico: number;
+  numeroTurno: string;
 }
 
 export interface DeleteTurnoDTO {

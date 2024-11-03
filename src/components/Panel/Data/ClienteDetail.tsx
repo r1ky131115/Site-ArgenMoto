@@ -22,8 +22,8 @@ const ClienteDetail: React.FC<ClienteDetailProps> = ({ clienteId }) => {
   const [cliente, setCliente] = useState<ClienteData | undefined>();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>('');
-  const [successMessage, setSuccessMessage] = useState<string>('');
+  const [error, setError] = useState<string | null>('');
+  const [successMessage, setSuccessMessage] = useState<string | null>('');
 
   useEffect(() => {
     if (clienteId && clienteId !== '0') {
@@ -98,6 +98,11 @@ const ClienteDetail: React.FC<ClienteDetailProps> = ({ clienteId }) => {
       </Alert>
     );
   }
+
+  const handleCloseSnackbar = () => {
+    setError(null);
+    setSuccessMessage(null);
+  };
 
   return (
     <Card>
@@ -204,21 +209,18 @@ const ClienteDetail: React.FC<ClienteDetailProps> = ({ clienteId }) => {
         </Stack>
       </CardContent>
 
+      {/* Snackbar para mensajes de éxito y error */}
       <Snackbar
-        open={!!error}
-        autoHideDuration={1000}
+        open={!!error || !!successMessage}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
       >
-        <Alert severity="error">
-          {error}
-        </Alert>
-      </Snackbar>
-
-      <Snackbar
-        open={!!successMessage}
-        autoHideDuration={1000}
-      >
-        <Alert severity="success">
-          {successMessage}
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={error ? 'error' : 'success'}
+          sx={{ width: '100%' }}
+        >
+          {error || successMessage}
         </Alert>
       </Snackbar>
     </Card>

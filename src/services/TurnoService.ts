@@ -33,6 +33,7 @@ const TurnoService = {
 
   getTurnos: async (userId: string): Promise<Turno[]> => {
     try {
+      debugger
       const response = await api.get<Turno[]>(`/turno/${userId}`);
       return response.data;
     } catch (error) {
