@@ -7,7 +7,7 @@ export const useTurnos = () => {
   const [turnos, setTurnos] = useState<Turno[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState<string | null>('');
 
   const fetchTurnos = async () => {
     try {
@@ -57,7 +57,9 @@ export const useTurnos = () => {
     turnos,
     loading,
     error,
+    setError,
     successMessage,
+    setSuccessMessage,
     deleteTurnoForAdmin,
     updateTurnoEstado,
     refetchTurnos: fetchTurnos

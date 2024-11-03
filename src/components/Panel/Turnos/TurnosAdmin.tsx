@@ -1,5 +1,5 @@
 // components/TurnosList.tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Table, 
   TableBody, 
@@ -26,11 +26,7 @@ import utility from '../../../utils/format';
 
 
 const TurnosList: React.FC = () => {
-  const { turnos, loading, error, successMessage, deleteTurnoForAdmin, updateTurnoEstado } = useTurnos();
-
-  
-  const [errorMsj, setError] = useState<string>('');
-  const [successMsj, setSuccessMessage] = useState<string>('');
+  const { turnos, loading, error, setError, successMessage, setSuccessMessage, deleteTurnoForAdmin, updateTurnoEstado } = useTurnos();
 
   if (loading) {
     return (
@@ -47,6 +43,11 @@ const TurnosList: React.FC = () => {
       </Alert>
     );
   }
+
+  const handleCloseSnackbar = () => {
+    setError(null);
+    setSuccessMessage(null);
+  };
 
   return (
     <Box sx={{ width: '100%', overflowX: 'auto' }}>
@@ -130,24 +131,20 @@ const TurnosList: React.FC = () => {
         </Typography>
       )}
 
+      {/* Snackbar para mensajes de éxito y error */}
       <Snackbar
-        open={!!error}
-        autoHideDuration={2000}
+        open={!!error || !!successMessage}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
       >
-        <Alert severity="error" onClose={() => setError(errorMsj)}>
-          {error}
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={error ? 'error' : 'success'}
+          sx={{ width: '100%' }}
+        >
+          {error || successMessage}
         </Alert>
       </Snackbar>
-
-      <Snackbar
-        open={!!successMessage}
-        autoHideDuration={2000}
-      >
-        <Alert severity="success" onClose={() => setSuccessMessage(successMsj)}>
-          {successMessage}
-        </Alert>
-      </Snackbar>
-
     </Box>
   );
 };
