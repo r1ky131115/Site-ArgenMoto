@@ -7,3 +7,9 @@ export interface OrderDetail {
     precio: number;
     subtotal: number;
   }
+
+  export interface OrdenCompraDetalle {
+    idArticulo: number;
+    cantidad: number;
+    precio: number;
+  }

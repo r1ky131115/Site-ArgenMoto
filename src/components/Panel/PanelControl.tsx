@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, LayoutDashboard, ShoppingCart, Calendar, LogOut } from 'lucide-react';
+import { Menu, LayoutDashboard, ShoppingCart, Calendar, LogOut, List } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import ClienteDetail from './Data/ClienteDetail';
 import { Pedidos } from './Pedidos';
@@ -8,6 +8,7 @@ import './PanelControl.css';
 import { Turnos } from './Turnos/TurnosCliente';
 import TurnosList from './Turnos/TurnosAdmin';
 import OrderForm from '../OrderForm/OrderForm';
+import OrderList from './OrdenCompra/OrderList';
 
 // Tipos de usuarios permitidos
 type UserRole = 'Admin' | 'Cliente';
@@ -43,6 +44,8 @@ const PanelControl: React.FC = () => {
         return <ClienteDetail clienteId={clienteId ?? '0'} />;
       case 'pedidos':
         return <Pedidos />;
+      case 'ordenList':
+          return <OrderList />;    
       case 'ordenes':
           return <OrderForm />;  
       case 'turnosList':
@@ -68,6 +71,13 @@ const PanelControl: React.FC = () => {
       icon: <ShoppingCart className="w-5 h-5" />, 
       roles: ['Cliente'], 
       component: <Pedidos /> 
+    },
+    { 
+      id: 'ordenList', 
+      title: 'Ver órdenes de compra', 
+      icon: <List className="w-5 h-5" />, 
+      roles: ['Admin'], 
+      component: <OrderList /> 
     },
     { 
       id: 'ordenes', 
