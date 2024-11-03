@@ -23,7 +23,7 @@ const AboutSection: React.FC = () => {
               <h2 className="mb-4">Bienvenido a ArgenMoto</h2>
               
               <p>
-                cada vehículo cuenta una historia y cada viaje comienza con un sueño. 
+                Cada vehículo cuenta una historia y cada viaje comienza con un sueño. 
                 Nuestra pasión por la movilidad y la excelencia nos impulsa a ofrecerte solo lo mejor. 
                 Explora nuestra amplia gama de autos y encuentra el compañero perfecto para tus aventuras. 
                 Confiabilidad, innovación y un servicio excepcional te esperan. 
@@ -35,10 +35,10 @@ const AboutSection: React.FC = () => {
               
               <p>
                 <NavLink 
-                    to="/" 
+                    to="/vehicles" 
                     className="btn btn-primary py-2 px-3"
                 >
-                    Search ArticleProps
+                    Navega hacia tu nueva moto
                 </NavLink>
               </p>
             </div>

@@ -94,10 +94,10 @@ const CounterSection: React.FC = () => {
       <div className="overlay"></div>
       <div className="container">
         <div className="row">
-          <CounterItem number={10} label="Year <br>Experienced" startAnimation={startAnimation} />
-          <CounterItem number={205} label="Total <br>Cars" startAnimation={startAnimation} />
-          <CounterItem number={2590} label="Happy <br>Customers" startAnimation={startAnimation} />
-          <CounterItem number={2} label="Total <br>Branches" startAnimation={startAnimation} />
+          <CounterItem number={10} label="Años de <br>Experiencia" startAnimation={startAnimation} />
+          <CounterItem number={205} label="Total <br>Motos vendidas" startAnimation={startAnimation} />
+          <CounterItem number={2590} label="Clientes <br>Felices" startAnimation={startAnimation} />
+          <CounterItem number={2} label="Total de <br>Sucursales" startAnimation={startAnimation} />
         </div>
       </div>
     </section>

@@ -15,12 +15,18 @@ const LoginPage: React.FC = () => {
     return <Navigate to={from} replace />;
   }
 
+  const breadcrumbs = [
+    { text: 'Inicio', url: '/' },
+    { text: 'Inicio de sesión', url: '/login' }
+  ];
+
   // Si no está autenticado, mostrar el formulario de login
   return (
     <>
       <PageHeader
         backgroundImage="/images/bg_3.jpg"
         title="Inicia Sesión"
+        breadcrumbs={breadcrumbs}
       />
       <LoginForm />
     </>

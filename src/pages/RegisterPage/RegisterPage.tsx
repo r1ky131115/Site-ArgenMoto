@@ -4,12 +4,18 @@ import RegisterForm from '../../components/RegisterForm/RegisterForm';
 import PageHeader from '../../components/Header/PageHeader';
 import '../../index.css';
 
+const breadcrumbs = [
+  { text: 'Inicio', url: '/' },
+  { text: 'Registro', url: '/register' }
+];
+
 const RegisterPage: React.FC = () => {
   return (
     <>
       <PageHeader
         backgroundImage="/images/bg_3.jpg"
         title="Regístrate"
+        breadcrumbs={breadcrumbs}
       />
       <div className="form-container">
         <RegisterForm />

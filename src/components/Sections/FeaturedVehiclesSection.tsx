@@ -40,8 +40,8 @@ const FeaturedVehiclesSection: React.FC<FeaturedAticlesSectionProps> = ({
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-12 heading-section text-center mb-5">
-            <span className="subheading">What we offer</span>
-            <h2 className="mb-2">Featured Vehicles</h2>
+            <span className="subheading">Nuestras ofertas!</span>
+            <h2 className="mb-2">Motos destacadas</h2>
           </div>
         </div>
         <div className="row">
