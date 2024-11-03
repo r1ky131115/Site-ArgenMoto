@@ -215,15 +215,6 @@ const Contacto: React.FC = () => {
             </ContactForm>
           </Grid>
         </Grid>
-
-        {/* Contenedor del Mapa */}
-        <Grid container justifyContent="center">
-          <Grid item xs={12}>
-            <MapContainer>
-              {/* Aquí puedes integrar un mapa usando Google Maps, Mapbox, etc. */}
-            </MapContainer>
-          </Grid>
-        </Grid>
       </Container>
     </Box>
   );
