@@ -215,7 +215,7 @@ export const Turnos: React.FC = () => {
                       <strong>Marca/Modelo:</strong> {turno.articulo.marca} {turno.articulo.modelo}
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      <strong>Código:</strong> {turno.articulo.codigoArticulo}
+                      <strong>Código:</strong> {turno.articulo.codigo}
                     </Typography>
                   </Box>
 

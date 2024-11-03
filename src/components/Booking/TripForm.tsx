@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
   Box,
@@ -17,6 +17,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import es from 'date-fns/locale/es';
+import ArticleService from '../../services/ArticleService';
+import { Articulo } from '../../types/ArticleProps';
 
 // Tipos para el formulario
 interface IFormInputs {
@@ -45,6 +47,7 @@ const FormContainer = styled(Box)(({ theme }) => ({
 }));
 
 const TripForm: React.FC = () => {
+  const [articles, setArticles] = useState<Articulo[]>([]);
   const { control, handleSubmit, formState: { errors } } = useForm<IFormInputs>({
     defaultValues: {
       branch: '',
@@ -64,10 +67,19 @@ const TripForm: React.FC = () => {
     { value: 'la-plata', label: 'La Plata' },
   ];
 
-  const motorcycles = [
-    { value: 'moto-1', label: 'Moto - 1' },
-    { value: 'moto-2', label: 'Moto - 2' },
-  ];
+  useEffect(() => {
+      const fetchArticles = async () => {
+        try {
+          const response = await ArticleService.getArticles();
+          if (!response) throw new Error('Error al cargar artículos');
+          setArticles(response);
+        } catch (error) {
+          console.log('Error al cargar artículos');
+        }
+      };
+      fetchArticles();
+    
+  }, []);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
@@ -108,9 +120,9 @@ const TripForm: React.FC = () => {
                   <FormControl fullWidth error={!!errors.motorcycle}>
                     <InputLabel>Moto</InputLabel>
                     <Select {...field} label="Moto">
-                      {motorcycles.map((moto) => (
-                        <MenuItem key={moto.value} value={moto.value}>
-                          {moto.label}
+                      {articles.map((article) => (
+                        <MenuItem key={article.id} value={article.id}>
+                          {article.marca} - {article.modelo}
                         </MenuItem>
                       ))}
                     </Select>

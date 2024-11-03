@@ -7,12 +7,11 @@ export interface ArticleProps {
     modelo: string;
     anio: number;
     cilindro: string;
-    imageUrl: string;
   }
 
 export interface Articulo {
   id: number;
-  codigoArticulo: string;
+  codigo: string;
   descripcion: string;
   marca: string;
   modelo: string;
