@@ -7,7 +7,7 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import PanelControlPage from '../pages/PanelControl/PanelControlPage';
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import { AuthProvider } from '../context/AuthContext';
-
+import Contact from '../pages/Contact/Contact';
 const AppWrapper = ({ children }: { children: React.ReactNode }) => (
   <AuthProvider>
     {children}
@@ -26,6 +26,10 @@ export const router = createBrowserRouter([
       { 
         path: '/vehicles', 
         element: <VehiclesGrid /> 
+      },
+      { 
+        path: '/contact', 
+        element: <Contact /> 
       },
       { 
         path: '/login', 

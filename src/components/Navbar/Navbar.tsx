@@ -74,7 +74,7 @@ const Navbar: React.FC = () => {
             </li>
             <li className="nav-item">
               <NavLink 
-                to="/contacto" 
+                to="/contact" 
                 className={({ isActive }) => 
                   `nav-link ${isActive ? 'active' : ''}`
                 }

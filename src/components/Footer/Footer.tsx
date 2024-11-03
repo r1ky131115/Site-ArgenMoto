@@ -42,7 +42,7 @@ const Footer: React.FC = () => {
   const contactInfo: ContactInfo = {
     address: "Av. Calchaquí 6200 (1888) Florencio Varela Buenos Aires, Argentina",
     phone: "+54 11 4275-6100",
-    email: "www.unaj.edu.ar"
+    email: "infovirtual@unaj.edu.ar"
   };
 
   const currentYear = new Date().getFullYear();
