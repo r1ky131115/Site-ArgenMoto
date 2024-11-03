@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facebook, Twitter, Instagram } from 'lucide-react';
+import { Facebook, Twitter, Instagram, MapIcon, Phone, Mail } from 'lucide-react';
 
 interface SocialLink {
   icon: JSX.Element;
@@ -110,19 +110,21 @@ const Footer: React.FC = () => {
               <div className="block-23 mb-3">
                 <ul>
                   <li>
-                    <span className="icon icon-map-marker"></span>
-                    <span className="text">{contactInfo.address}</span>
+                    <a href={`tel:${contactInfo.address}`}>
+                      <MapIcon />
+                      <span className="text">&nbsp;{contactInfo.address}</span>
+                    </a>
                   </li>
                   <li>
                     <a href={`tel:${contactInfo.phone}`}>
-                      <span className="icon icon-phone"></span>
-                      <span className="text">{contactInfo.phone}</span>
+                      <Phone />
+                      <span className="text">&nbsp;{contactInfo.phone}</span>
                     </a>
                   </li>
                   <li>
                     <a href={`mailto:${contactInfo.email}`}>
-                      <span className="icon icon-envelope"></span>
-                      <span className="text">{contactInfo.email}</span>
+                      <Mail />
+                      <span className="text">&nbsp;{contactInfo.email}</span>
                     </a>
                   </li>
                 </ul>
