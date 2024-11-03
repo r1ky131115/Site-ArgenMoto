@@ -27,3 +27,14 @@ export interface Articulo {
   stockActual?: number;
   idProveedor?: number;
 }
+
+export interface newArticulo {
+  idProveedor?: number;
+  descripcion: string;
+  stockActual?: number;
+  precio: number;
+  marca: string;
+  modelo: string;
+  año?: number;
+  cilindro?: string;
+}

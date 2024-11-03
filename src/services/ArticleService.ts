@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ArticleProps, Articulo } from '../types/ArticleProps';
+import { ArticleProps, Articulo, newArticulo } from '../types/ArticleProps';
 
 const API_BASE_URL = 'https://localhost:7183/api/Articulos';
 
@@ -43,6 +43,15 @@ const ArticleService = {
   GetArticlesPorProveedor: async (id: number): Promise<Articulo[]> => {
     try {
       const response = await api.get<Articulo[]>(`/proveedor/${id}`);
+      return response.data;
+    } catch (error: any) {
+      return handleApiError(error);
+    }
+  },
+
+  CreateArticles: async (article: newArticulo): Promise<void> => {
+    try {
+      const response = await api.post('/', {article});
       return response.data;
     } catch (error: any) {
       return handleApiError(error);
