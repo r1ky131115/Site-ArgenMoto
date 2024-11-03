@@ -13,7 +13,7 @@ const AboutSection: React.FC = () => {
         <div className="row no-gutters">
           <div
             className="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center"
-            style={{ backgroundImage: `url('/images/image_6.jpg')` }}
+            style={{ backgroundImage: `url('/images/bg_3.jpg')` }}
           >
           </div>
           

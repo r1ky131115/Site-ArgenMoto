@@ -19,7 +19,7 @@ const VehiclesGrid: React.FC = () => {
   return (
     <>
       <PageHeader
-        backgroundImage="/images/bg_3.jpg"
+        backgroundImage="/images/bg_2.jpg"
         title="Nuestras Motos"
         breadcrumbs={breadcrumbs}
       />

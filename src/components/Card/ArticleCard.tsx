@@ -16,11 +16,10 @@ const ArticleCard: React.FC<{
   }> = ({ vehicle, onBookNow, onViewDetails }) => {
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card>
       <CardMedia
         sx={{ height: 180 }}
-        image='images/image_2.jpg'
-        // image={vehicle.imageUrl}
+        image={`images/Moto/${vehicle.marca}/image_1.jpg`}
         title={vehicle.marca}
       />
       <CardContent>

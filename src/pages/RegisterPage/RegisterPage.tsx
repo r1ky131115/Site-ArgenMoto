@@ -13,7 +13,7 @@ const RegisterPage: React.FC = () => {
   return (
     <>
       <PageHeader
-        backgroundImage="/images/bg_3.jpg"
+        backgroundImage="/images/bg_4.jpg"
         title="Regístrate"
         breadcrumbs={breadcrumbs}
       />
