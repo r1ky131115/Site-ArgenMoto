@@ -1,86 +1,179 @@
 import React from 'react';
-import useAnimateOnScroll from '../../hooks/useAnimateOnScroll';
-import '../../styles/animation.css'
+import { useForm, Controller } from 'react-hook-form';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+  Paper
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import es from 'date-fns/locale/es';
+
+// Tipos para el formulario
+interface IFormInputs {
+  branch: string;
+  motorcycle: string;
+  visitDate: Date | null;
+  visitTime: Date | null;
+}
+
+// Estilos personalizados
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
+  borderRadius: theme.spacing(2),
+}));
+
+const FormContainer = styled(Box)(({ theme }) => ({
+  '& .MuiFormControl-root': {
+    marginBottom: theme.spacing(2),
+  },
+  '& .MuiInputBase-root': {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.spacing(1),
+  },
+}));
 
 const TripForm: React.FC = () => {
-    const formRef = useAnimateOnScroll<HTMLFormElement>();
+  const { control, handleSubmit, formState: { errors } } = useForm<IFormInputs>({
+    defaultValues: {
+      branch: '',
+      motorcycle: '',
+      visitDate: null,
+      visitTime: null,
+    }
+  });
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        // Lógica para manejar el envío del formulario
-        console.log("Form submitted");
-    };
+  const onSubmit = (data: IFormInputs) => {
+    console.log('Form submitted:', data);
+    // Aquí puedes agregar la lógica para enviar los datos
+  };
 
-    return (
-        <div className="col-md-4 d-flex align-items-center">
-        <form 
-            ref={formRef}
-            onSubmit={handleSubmit} 
-            className="request-form ftco-animate bg-primary"
-            data-animate-effect="fadeInLeft"
-        >
-            <h2>Make your trip</h2>
-            <div className="form-group">
-            <label htmlFor="pickup" className="label">Pick-up location</label>
-            <input
-                type="text"
-                id="pickup"
-                className="form-control"
-                placeholder="City, Airport, Station, etc"
-            />
-            </div>
+  const branches = [
+    { value: 'berazategui', label: 'Berazategui' },
+    { value: 'la-plata', label: 'La Plata' },
+  ];
 
-            <div className="form-group">
-            <label htmlFor="dropoff" className="label">Drop-off location</label>
-            <input
-                type="text"
-                id="dropoff"
-                className="form-control"
-                placeholder="City, Airport, Station, etc"
-            />
-            </div>
+  const motorcycles = [
+    { value: 'moto-1', label: 'Moto - 1' },
+    { value: 'moto-2', label: 'Moto - 2' },
+  ];
 
-            <div className="d-flex">
-            <div className="form-group mr-2">
-                <label htmlFor="book_pick_date" className="label">Pick-up date</label>
-                <input
-                type="date"
-                className="form-control"
-                id="book_pick_date"
-                placeholder="Date"
-                />
-            </div>
-            <div className="form-group ml-2">
-                <label htmlFor="book_off_date" className="label">Drop-off date</label>
-                <input
-                type="date"
-                className="form-control"
-                id="book_off_date"
-                placeholder="Date"
-                />
-            </div>
-            </div>
+  return (
+    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
+      <Box className="col-md-4 d-flex align-items-center">
+        <StyledPaper elevation={3}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <FormContainer>
+              <Typography variant="h5" component="h2" gutterBottom>
+                Contáctenos
+              </Typography>
 
-            <div className="form-group">
-            <label htmlFor="time_pick" className="label">Pick-up time</label>
-            <input
-                type="time"
-                className="form-control"
-                id="time_pick"
-                placeholder="Time"
-            />
-            </div>
+              <Controller
+                name="branch"
+                control={control}
+                rules={{ required: 'Por favor seleccione una sucursal' }}
+                render={({ field }) => (
+                  <FormControl fullWidth error={!!errors.branch}>
+                    <InputLabel>Sucursal</InputLabel>
+                    <Select {...field} label="Sucursal">
+                      {branches.map((branch) => (
+                        <MenuItem key={branch.value} value={branch.value}>
+                          {branch.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {errors.branch && (
+                      <FormHelperText>{errors.branch.message}</FormHelperText>
+                    )}
+                  </FormControl>
+                )}
+              />
 
-            <div className="form-group">
-            <input
+              <Controller
+                name="motorcycle"
+                control={control}
+                rules={{ required: 'Por favor seleccione una moto' }}
+                render={({ field }) => (
+                  <FormControl fullWidth error={!!errors.motorcycle}>
+                    <InputLabel>Moto</InputLabel>
+                    <Select {...field} label="Moto">
+                      {motorcycles.map((moto) => (
+                        <MenuItem key={moto.value} value={moto.value}>
+                          {moto.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {errors.motorcycle && (
+                      <FormHelperText>{errors.motorcycle.message}</FormHelperText>
+                    )}
+                  </FormControl>
+                )}
+              />
+
+              <Controller
+                name="visitDate"
+                control={control}
+                rules={{ required: 'Por favor seleccione una fecha' }}
+                render={({ field }) => (
+                  <DatePicker
+                    label="Fecha de visita"
+                    {...field}
+                    slotProps={{
+                      textField: {
+                        fullWidth: true,
+                        error: !!errors.visitDate,
+                        helperText: errors.visitDate?.message,
+                      },
+                    }}
+                  />
+                )}
+              />
+
+              <Controller
+                name="visitTime"
+                control={control}
+                rules={{ required: 'Por favor seleccione un horario' }}
+                render={({ field }) => (
+                  <TimePicker
+                    label="Horario de visita"
+                    {...field}
+                    slotProps={{
+                      textField: {
+                        fullWidth: true,
+                        error: !!errors.visitTime,
+                        helperText: errors.visitTime?.message,
+                      },
+                    }}
+                  />
+                )}
+              />
+
+              <Button
                 type="submit"
-                value="Rent A Car Now"
-                className="btn btn-secondary py-3 px-4"
-            />
-            </div>
-        </form>
-        </div>
-    );
+                variant="contained"
+                color="success"
+                fullWidth
+                sx={{ mt: 2, py: 1.5 }}
+              >
+                Reservar ahora
+              </Button>
+            </FormContainer>
+          </form>
+        </StyledPaper>
+      </Box>
+    </LocalizationProvider>
+  );
 };
 
 export default TripForm;
