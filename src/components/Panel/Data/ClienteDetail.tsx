@@ -110,7 +110,7 @@ const ClienteDetail: React.FC<ClienteDetailProps> = ({ clienteId }) => {
         <Stack spacing={3}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Typography variant="h5" component="h2">
-              Datos del Cliente
+              Datos del usuario:
             </Typography>
             <Button
               variant="contained"
