@@ -63,7 +63,7 @@ const TripForm: React.FC = () => {
   };
 
   const branches = [
-    { value: 'berazategui', label: 'Berazategui' },
+    { value: 'lanus', label: 'Lanus' },
     { value: 'la-plata', label: 'La Plata' },
   ];
 
