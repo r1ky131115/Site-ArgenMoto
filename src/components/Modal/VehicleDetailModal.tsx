@@ -147,10 +147,10 @@ const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                 </Typography>
                 {/* Aquí puedes agregar más detalles del vehículo */}
                 <Typography variant="body2" color="text.secondary">
-                  Cilindrada: {vehicle.cilindro}
+                  Cilindrada: {vehicle.cilindrada}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Año: {vehicle.anio}
+                  Año: {vehicle.año}
                 </Typography>
                 {/* Agrega más especificaciones según tu modelo de datos */}
               </CardContent>

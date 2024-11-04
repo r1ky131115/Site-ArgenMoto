@@ -5,8 +5,8 @@ export interface ArticleProps {
     precio: number;
     marca: string;
     modelo: string;
-    anio: number;
-    cilindro: string;
+    año: number;
+    cilindrada: string;
   }
 
 export interface Articulo {

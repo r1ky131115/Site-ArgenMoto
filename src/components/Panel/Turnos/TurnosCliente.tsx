@@ -55,6 +55,7 @@ export const Turnos: React.FC = () => {
   };
 
   const handleCreateOrUpdate = async (turnoData: CreateTurnoDTO | UpdateTurnoDTO) => {
+    debugger
     if ('id' in turnoData && turnoData.id > 0) {
       await TurnoService.updateTurnoData(turnoData.id, turnoData);
     } else {

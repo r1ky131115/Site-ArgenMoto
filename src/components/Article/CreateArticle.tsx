@@ -75,7 +75,6 @@ const NewArticle = () => {
     };
 
     try {
-        debugger
         await ArticleService.CreateArticles(article);
         setSuccessMessage('El articulo fue generado exitosamente');
         // Reset form
