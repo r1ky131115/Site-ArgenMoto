@@ -30,11 +30,13 @@ export interface Articulo {
 
 export interface newArticulo {
   idProveedor?: number;
-  descripcion: string;
-  stockActual?: number;
-  precio: number;
   marca: string;
   modelo: string;
+  descripcion: string;
+  precio: number;
+  stockActual?: number;
+  nroMotor?: number;
+  nroChasis?: number;
   año?: number;
-  cilindro?: string;
+  cilindrada?: string;
 }

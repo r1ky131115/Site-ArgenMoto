@@ -51,7 +51,7 @@ const ArticleService = {
 
   CreateArticles: async (article: newArticulo): Promise<void> => {
     try {
-      const response = await api.post('/', {article});
+      const response = await api.post('', article);
       return response.data;
     } catch (error: any) {
       return handleApiError(error);

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, LayoutDashboard, ShoppingCart, Calendar, LogOut, List } from 'lucide-react';
+import { Menu, LayoutDashboard, ShoppingCart, Calendar, LogOut, List, Pen } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import ClienteDetail from './Data/ClienteDetail';
 import { Pedidos } from './Pedidos';
-import './PanelControl.css';
 import { Turnos } from './Turnos/TurnosCliente';
 import TurnosList from './Turnos/TurnosAdmin';
 import OrderForm from '../OrderForm/OrderForm';
 import OrderList from './OrdenCompra/OrderList';
+import './PanelControl.css';
+import NewArticle from '../Article/CreateArticle';
 
 // Tipos de usuarios permitidos
 type UserRole = 'Admin' | 'Cliente';
@@ -52,6 +53,8 @@ const PanelControl: React.FC = () => {
         return <TurnosList />;
       case 'turnos':
         return <Turnos />;
+      case 'articulo':
+        return <NewArticle />;
       default:
         return <div>Seleccione una opción</div>;
     }
@@ -99,6 +102,13 @@ const PanelControl: React.FC = () => {
       icon: <Calendar className="w-5 h-5" />, 
       roles: ['Cliente'], 
       component: <Turnos /> 
+    },
+    { 
+      id: 'articulo', 
+      title: 'Ingresar nuevo articulo', 
+      icon: <Pen className="w-5 h-5" />, 
+      roles: ['Admin'], 
+      component: <NewArticle /> 
     },
   ];
 
