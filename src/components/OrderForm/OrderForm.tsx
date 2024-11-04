@@ -254,11 +254,6 @@ const OrderForm = () => {
                   </List>
                   
                   <Divider sx={{ my: 2 }} />
-                  
-                  <Typography variant="h6">
-                    <strong>IVA 21%:</strong>
-                  </Typography>
-
                   <Typography variant="h5">
                     <strong>Total:</strong> ${orderDetails.reduce((sum, detail) => sum + detail.subtotal, 0)}
                   </Typography>
